@@ -1,4 +1,5 @@
 import { Profile } from '../types/portfolio';
+import avatarImage from '../assets/images/Professional Headshot in Charcoal Suit.png';
 
 export const profileData: Profile = {
   name: 'Amit Kumar',
@@ -21,7 +22,7 @@ export const profileData: Profile = {
   geeksforgeeks: 'https://www.geeksforgeeks.org/profile/amitkumar2023',
   codolio: 'https://codolio.com/profile/amitkumar21',
   resumePdfUrl: '/Amit_Kumar_Resume.pdf',
-  avatarUrl: '/src/assets/images/Professional Headshot in Charcoal Suit.png',
+  avatarUrl: avatarImage,
   coreFocus: [
     'Scalable Backend Architecture (Spring Boot, Django REST Framework)',
     'Distributed Systems & Caching (Redis Lua, Token Bucket)',

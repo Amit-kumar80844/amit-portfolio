@@ -1,4 +1,6 @@
 import { Project } from '../types/portfolio';
+import rateLimiterCover from '../assets/images/rate_limiter_arch_1794253974439.jpg';
+import tripbreakCover from '../assets/images/tripbreak_android_mockup_1794253975318.jpg';
 
 export const projectsData: Project[] = [
   {
@@ -8,7 +10,7 @@ export const projectsData: Project[] = [
     oneLiner: 'High-throughput rate-limiting engine implementing Token Bucket & Sliding Window Counter via atomic Redis Lua scripts.',
     category: 'Backend',
     tags: ['Java 21', 'Spring Boot', 'Redis', 'Docker', 'Lua Scripts', 'Distributed Systems'],
-    coverImage: '/src/assets/images/rate_limiter_arch_1794253974439.jpg',
+    coverImage: rateLimiterCover,
     githubUrl: 'https://github.com/Amit-kumar80844/api-rate-limiter-sdk',
     status: 'Completed',
     featured: true,
@@ -152,7 +154,7 @@ end`,
     oneLiner: 'Android image fetching architecture in Jetpack Compose paired with a Spring Boot caching backend and Redis.',
     category: 'Android',
     tags: ['Android', 'Kotlin', 'Jetpack Compose', 'MVVM', 'Retrofit', 'Coil', 'Spring Boot', 'Redis'],
-    coverImage: '/src/assets/images/tripbreak_android_mockup_1794253975318.jpg',
+    coverImage: tripbreakCover,
     githubUrl: 'https://github.com/Amit-kumar80844/image-downloader-android',
     status: 'Completed',
     featured: true,
