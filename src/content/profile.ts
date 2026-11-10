@@ -21,7 +21,7 @@ export const profileData: Profile = {
   geeksforgeeks: 'https://www.geeksforgeeks.org/profile/amitkumar2023',
   codolio: 'https://codolio.com/profile/amitkumar21',
   resumePdfUrl: '/Amit_Kumar_Resume.pdf',
-  avatarUrl: '/src/assets/images/amit_kumar_portrait_1794253972558.jpg',
+  avatarUrl: '/src/assets/images/Professional Headshot in Charcoal Suit.png',
   coreFocus: [
     'Scalable Backend Architecture (Spring Boot, Django REST Framework)',
     'Distributed Systems & Caching (Redis Lua, Token Bucket)',

@@ -93,17 +93,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onSelectProjec
           })}
         </div>
 
-        {/* Projects Grid: Dynamic Bento Showcase */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Projects Grid: cards flow naturally without reserving empty bento cells */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 items-start">
           {filteredProjects.map((project) => {
-            const isFeatured = project.featured;
-
             return (
               <div
                 key={project.id}
-                className={`flex flex-col justify-between rounded-2xl border transition-all overflow-hidden group ${
-                  isFeatured ? 'md:col-span-2 lg:col-span-2' : 'col-span-1'
-                }`}
+                className="flex flex-col justify-between rounded-2xl border transition-all overflow-hidden group"
                 style={{
                   backgroundColor: 'var(--bg-card)',
                   borderColor: 'var(--border-subtle)',

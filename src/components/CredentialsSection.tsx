@@ -40,11 +40,11 @@ export const CredentialsSection: React.FC = () => {
           </p>
         </div>
 
-        {/* 2-Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Natural-flow layout: each track owns a full row so uneven content never leaves a hole */}
+        <div className="space-y-14">
           
-          {/* Left Column (6 cols): Open Source */}
-          <div className="lg:col-span-6 flex flex-col gap-6">
+          {/* Open Source */}
+          <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between">
               <h3 
                 className="text-lg font-bold flex items-center gap-2"
@@ -65,7 +65,7 @@ export const CredentialsSection: React.FC = () => {
               </a>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {openSourceData.map((item) => (
                 <div 
                   key={item.id}
@@ -197,8 +197,8 @@ export const CredentialsSection: React.FC = () => {
 
           </div>
 
-          {/* Right Column (6 cols): Competitive Programming & Milestones */}
-          <div className="lg:col-span-6 flex flex-col gap-6">
+          {/* Competitive Programming & Milestones */}
+          <div className="flex flex-col gap-6">
             <h3 
               className="text-lg font-bold flex items-center gap-2"
               style={{ color: 'var(--text-primary)' }}
@@ -207,7 +207,7 @@ export const CredentialsSection: React.FC = () => {
               <span>Algorithmic & Academic Milestones</span>
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
               {achievementsData.map((item) => (
                 <div 
                   key={item.id}
