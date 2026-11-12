@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowUp, Code2 } from 'lucide-react';
 import { profileData } from '../content/profile';
 
 interface FooterProps {
@@ -16,7 +16,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenResumeModal })
 
   return (
     <footer 
-      className="border-t py-12 transition-colors"
+      className="border-t py-16 transition-colors"
       style={{
         backgroundColor: 'var(--bg-main)',
         borderColor: 'var(--border-subtle)',
@@ -24,70 +24,59 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenResumeModal })
     >
       <div className="max-w-7xl mx-auto px-6">
         
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-10">
-          <div>
+        {/* Top Tier */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-12">
+          <div className="space-y-2">
             <h3 
-              className="font-heading font-bold text-lg"
+              className="font-heading font-bold text-xl tracking-tight"
               style={{ color: 'var(--text-primary)' }}
             >
               {profileData.name}
             </h3>
             <p 
-              className="text-xs mt-1 max-w-sm"
+              className="text-xs sm:text-sm max-w-md leading-relaxed"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Backend Engineer building scalable microservices, distributed storage engines, and high-performance Android applications.
+              Backend & Systems Engineer specializing in distributed concurrency, Redis primitives, and high-performance Android architecture.
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Navigation Links */}
           <div 
             className="flex flex-wrap items-center gap-6 text-xs font-mono"
             style={{ color: 'var(--text-secondary)' }}
           >
-            <button
-              onClick={() => onNavigate('about')}
-              className="hover:opacity-100 transition-colors cursor-pointer"
-            >
-              About
-            </button>
-            <button
-              onClick={() => onNavigate('projects')}
-              className="hover:opacity-100 transition-colors cursor-pointer"
-            >
-              Projects
-            </button>
-            <button
-              onClick={() => onNavigate('experience')}
-              className="hover:opacity-100 transition-colors cursor-pointer"
-            >
-              Experience
-            </button>
-            <button
-              onClick={() => onNavigate('skills')}
-              className="hover:opacity-100 transition-colors cursor-pointer"
-            >
-              Skills
-            </button>
-            <button
-              onClick={() => onNavigate('engineering')}
-              className="hover:opacity-100 transition-colors cursor-pointer"
-            >
-              Engineering
-            </button>
+            {[
+              { label: 'About', id: 'about' },
+              { label: 'Projects', id: 'projects' },
+              { label: 'Experience', id: 'experience' },
+              { label: 'Skills', id: 'skills' },
+              { label: 'Engineering', id: 'engineering' },
+              { label: 'Contact', id: 'contact' },
+            ].map(({ label, id }) => (
+              <button
+                key={id}
+                onClick={() => onNavigate(id)}
+                className="transition-colors cursor-pointer hover:underline"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                {label}
+              </button>
+            ))}
+            
             <button
               onClick={onOpenResumeModal}
-              className="hover:underline cursor-pointer font-semibold"
+              className="font-semibold cursor-pointer hover:underline"
               style={{ color: 'var(--accent)' }}
             >
-              Resume
+              Resume PDF
             </button>
           </div>
 
           {/* Back to top */}
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 p-2 rounded-lg border text-xs font-mono transition-colors cursor-pointer"
+            className="flex items-center gap-2 px-3 py-2 rounded border text-xs font-mono transition-colors cursor-pointer hover:opacity-80"
             style={{
               backgroundColor: 'var(--bg-secondary)',
               borderColor: 'var(--border-subtle)',
@@ -100,60 +89,53 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenResumeModal })
           </button>
         </div>
 
-        {/* Bottom row: Legal & Socials */}
+        {/* Bottom Tier: Verified Profiles & Copyright */}
         <div 
-          className="pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono"
+          className="pt-8 border-t flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono"
           style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
         >
           <div>
-            © {currentYear} Amit Kumar · Portfolio
+            © {currentYear} Amit Kumar · Built with React 19 & Tailwind CSS
           </div>
 
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-wrap items-center gap-5">
             <a
               href={profileData.github}
               target="_blank"
               rel="noreferrer"
-              className="transition-colors hover:opacity-100 flex items-center gap-1"
+              className="transition-colors hover:opacity-80 flex items-center gap-1.5"
               style={{ color: 'var(--text-secondary)' }}
-              aria-label="GitHub"
-              title="GitHub Profile"
             >
-              <Github className="w-4 h-4" />
+              <Github className="w-3.5 h-3.5" />
               <span>GitHub</span>
             </a>
             <a
               href={profileData.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="transition-colors hover:opacity-100 flex items-center gap-1"
+              className="transition-colors hover:opacity-80 flex items-center gap-1.5"
               style={{ color: 'var(--text-secondary)' }}
-              aria-label="LinkedIn"
-              title="LinkedIn Profile"
             >
-              <Linkedin className="w-4 h-4" />
+              <Linkedin className="w-3.5 h-3.5" />
               <span>LinkedIn</span>
             </a>
             <a
               href={profileData.leetcode}
               target="_blank"
               rel="noreferrer"
-              className="transition-colors hover:opacity-100"
+              className="transition-colors hover:opacity-80 flex items-center gap-1.5"
               style={{ color: 'var(--text-secondary)' }}
-              aria-label="LeetCode"
-              title="LeetCode Profile"
             >
-              LeetCode
+              <Code2 className="w-3.5 h-3.5" />
+              <span>LeetCode</span>
             </a>
             {profileData.codeforces && (
               <a
                 href={profileData.codeforces}
                 target="_blank"
                 rel="noreferrer"
-                className="transition-colors hover:opacity-100"
+                className="transition-colors hover:opacity-80"
                 style={{ color: 'var(--text-secondary)' }}
-                aria-label="Codeforces"
-                title="Codeforces Profile"
               >
                 Codeforces
               </a>
@@ -163,36 +145,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenResumeModal })
                 href={profileData.geeksforgeeks}
                 target="_blank"
                 rel="noreferrer"
-                className="transition-colors hover:opacity-100"
+                className="transition-colors hover:opacity-80"
                 style={{ color: 'var(--text-secondary)' }}
-                aria-label="GeeksforGeeks"
-                title="GeeksforGeeks Profile"
               >
-                GFG
-              </a>
-            )}
-            {profileData.codolio && (
-              <a
-                href={profileData.codolio}
-                target="_blank"
-                rel="noreferrer"
-                className="transition-colors hover:opacity-100"
-                style={{ color: 'var(--text-secondary)' }}
-                aria-label="Codolio"
-                title="Codolio Profile"
-              >
-                Codolio
+                GeeksforGeeks
               </a>
             )}
             <a
               href={`mailto:${profileData.email}`}
-              className="transition-colors hover:opacity-100 flex items-center gap-1"
+              className="transition-colors hover:opacity-80 flex items-center gap-1.5"
               style={{ color: 'var(--text-secondary)' }}
-              aria-label="Email"
-              title="Send Email"
             >
-              <Mail className="w-4 h-4" />
-              <span>Email</span>
+              <Mail className="w-3.5 h-3.5" />
+              <span>{profileData.email}</span>
             </a>
           </div>
         </div>

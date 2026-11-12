@@ -38,7 +38,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
   if (!isOpen) return null;
 
-  // 100% Reliable Programmatic PDF Download
+  // Reliable Programmatic PDF Download
   const handleDownloadPdf = async () => {
     setDownloading(true);
     try {
@@ -59,7 +59,6 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
       setTimeout(() => setDownloadSuccess(false), 3000);
     } catch (err) {
       console.warn('Blob download failed, falling back to direct anchor:', err);
-      // Fallback
       const fallbackLink = document.createElement('a');
       fallbackLink.href = '/Amit_Kumar_Resume.pdf';
       fallbackLink.download = 'Amit_Kumar_Resume.pdf';
@@ -77,14 +76,12 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
   // Robust Print Handler
   const handlePrint = () => {
-    // 1. Try native print in current window
     try {
       window.print();
     } catch (e) {
       console.warn('Native window.print failed in current frame', e);
     }
 
-    // 2. Also prepare print window as fallback for sandboxed iframes
     const resumeElement = document.getElementById('resume-printable-content');
     if (resumeElement) {
       const printWindow = window.open('', '_blank', 'width=900,height=1000');
@@ -138,20 +135,37 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto no-print">
       <div 
-        className={`relative w-full ${isPrintMode ? 'max-w-5xl h-[96vh]' : 'max-w-4xl max-h-[92vh]'} bg-[#0e110f] border border-white/10 rounded-2xl shadow-2xl my-4 overflow-hidden flex flex-col transition-all duration-300`}
+        className={`relative w-full ${isPrintMode ? 'max-w-5xl h-[96vh]' : 'max-w-4xl max-h-[92vh]'} border rounded-lg shadow-2xl my-4 overflow-hidden flex flex-col transition-all duration-300`}
+        style={{
+          backgroundColor: 'var(--bg-card)',
+          borderColor: 'var(--border-strong)',
+        }}
         role="dialog"
         aria-modal="true"
         aria-labelledby="resume-title"
       >
         {/* Modal Top Header */}
-        <div className="p-4 sm:p-5 border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-3 bg-[#141815] shrink-0">
+        <div 
+          className="p-4 sm:p-5 border-b flex flex-wrap items-center justify-between gap-3 shrink-0"
+          style={{
+            backgroundColor: 'var(--bg-secondary)',
+            borderColor: 'var(--border-subtle)',
+          }}
+        >
           <div className="flex items-center gap-2">
-            <FileText className="w-4 h-4 text-[#0284C7] dark:text-[#b7f36b]" />
-            <h2 id="resume-title" className="text-sm sm:text-base font-bold text-[#F3F4EF]">
+            <FileText className="w-4 h-4" style={{ color: 'var(--accent)' }} />
+            <h2 id="resume-title" className="text-sm sm:text-base font-bold" style={{ color: 'var(--text-primary)' }}>
               Amit Kumar — Curriculum Vitae
             </h2>
-            <span className="hidden md:inline-block px-2 py-0.5 rounded text-[10px] font-mono bg-white/10 text-gray-300 border border-white/10">
-              Verified PDF
+            <span 
+              className="hidden md:inline-block px-2 py-0.5 rounded text-[10px] font-mono border"
+              style={{
+                backgroundColor: 'var(--bg-main)',
+                borderColor: 'var(--border-subtle)',
+                color: 'var(--text-muted)',
+              }}
+            >
+              Verified Document
             </span>
           </div>
 
@@ -160,7 +174,11 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             <button
               onClick={handleDownloadPdf}
               disabled={downloading}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-semibold text-white bg-[#0284C7] hover:bg-[#0369A1] rounded-lg transition-colors cursor-pointer disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-semibold rounded transition-colors cursor-pointer disabled:opacity-50"
+              style={{
+                backgroundColor: 'var(--accent)',
+                color: 'var(--bg-main)',
+              }}
               title="Download official PDF file directly"
             >
               {downloading ? (
@@ -170,7 +188,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 </>
               ) : downloadSuccess ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-green-300" />
+                  <Check className="w-3.5 h-3.5" />
                   <span>Saved to Downloads</span>
                 </>
               ) : (
@@ -186,7 +204,12 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               href="/Amit_Kumar_Resume.pdf"
               target="_blank"
               rel="noreferrer"
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium text-gray-200 bg-white/10 hover:bg-white/15 rounded-lg transition-colors cursor-pointer"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded border transition-colors cursor-pointer hover:opacity-80"
+              style={{
+                backgroundColor: 'var(--bg-main)',
+                borderColor: 'var(--border-subtle)',
+                color: 'var(--text-primary)',
+              }}
               title="Open full PDF file in browser tab"
             >
               <ExternalLink className="w-3.5 h-3.5" />
@@ -196,7 +219,12 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             {/* Print View Trigger */}
             <button
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium text-gray-200 bg-white/10 hover:bg-white/15 rounded-lg transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded border transition-colors cursor-pointer hover:opacity-80"
+              style={{
+                backgroundColor: 'var(--bg-main)',
+                borderColor: 'var(--border-subtle)',
+                color: 'var(--text-primary)',
+              }}
               title="Open system print dialog / save as PDF"
             >
               <Printer className="w-3.5 h-3.5" />
@@ -206,7 +234,12 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             {/* Toggle Full Clean View */}
             <button
               onClick={() => setIsPrintMode(!isPrintMode)}
-              className="p-1.5 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors cursor-pointer"
+              className="p-1.5 rounded border transition-colors cursor-pointer hover:opacity-80"
+              style={{
+                backgroundColor: 'var(--bg-main)',
+                borderColor: 'var(--border-subtle)',
+                color: 'var(--text-secondary)',
+              }}
               title={isPrintMode ? "Standard modal view" : "Expanded clean document view"}
             >
               {isPrintMode ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
@@ -215,10 +248,15 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors cursor-pointer ml-1"
+              className="p-1.5 rounded border transition-colors cursor-pointer ml-1 hover:opacity-80"
+              style={{
+                backgroundColor: 'var(--bg-main)',
+                borderColor: 'var(--border-subtle)',
+                color: 'var(--text-secondary)',
+              }}
               aria-label="Close resume viewer"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
           </div>
         </div>

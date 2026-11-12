@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Calendar, Clock, ArrowUpRight, X, ChevronRight } from 'lucide-react';
+import { BookOpen, Calendar, Clock, ArrowUpRight, X, ChevronRight, FileText } from 'lucide-react';
 import { articlesData } from '../content/extraData';
 import { TechnicalArticle } from '../types/portfolio';
 import { StorageEngine3D } from './StorageEngine3D';
@@ -10,59 +10,58 @@ export const EngineeringSection: React.FC = () => {
   return (
     <section 
       id="engineering" 
-      className="py-20 border-b transition-colors"
+      className="py-24 border-b transition-colors relative"
       style={{ borderColor: 'var(--border-subtle)' }}
     >
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Section Header */}
-        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <span 
-              className="text-xs font-mono tracking-wider uppercase font-semibold block mb-2"
+              className="text-xs font-mono tracking-widest uppercase font-semibold block mb-3"
               style={{ color: 'var(--accent)' }}
             >
-              05. Systems Thinking & Writing
+              05 — Systems Thinking & Writing
             </span>
             <h2 
-              className="text-3xl sm:text-4xl font-bold tracking-tight"
-              style={{ color: 'var(--text-primary)' }}
+              className="text-4xl sm:text-5xl font-bold tracking-tight"
+              style={{ color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
             >
-              Engineering Notes & Deep Dives
+              Engineering Notes.
             </h2>
           </div>
           <p 
-            className="text-xs font-mono max-w-md"
+            className="text-sm max-w-md leading-relaxed"
             style={{ color: 'var(--text-secondary)' }}
           >
-            Rigorous architectural explorations of storage engines, POSIX durability invariants, and distributed concurrency.
+            Technical breakdowns of storage engines, POSIX crash consistency, and lock-free concurrency.
           </p>
         </div>
 
-        {/* Highlight 3D Simulation + Featured Blueprint */}
-        <div className="mb-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        {/* 3D LSM Storage Engine Simulation + Featured Blueprint */}
+        <div className="mb-20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* 3D Interactive Simulation Viewport (7 cols) */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 flex flex-col">
             <StorageEngine3D />
           </div>
 
           {/* Accompanying Editorial Blueprint Synopsis (5 cols) */}
           <div 
-            className="lg:col-span-5 flex flex-col justify-between h-full p-6 sm:p-8 rounded-2xl border transition-all"
+            className="lg:col-span-5 p-6 sm:p-8 rounded-lg border flex flex-col justify-between transition-all"
             style={{
               backgroundColor: 'var(--bg-card)',
               borderColor: 'var(--border-strong)',
             }}
           >
             <div>
-              <div 
-                className="flex items-center gap-2 text-xs font-mono mb-3"
-                style={{ color: 'var(--text-secondary)' }}
-              >
-                <span className="font-semibold" style={{ color: 'var(--accent)' }}>Featured Technical Blueprint</span>
-                <span aria-hidden="true">·</span>
-                <span>C++20</span>
+              <div className="flex items-center gap-2 text-xs font-mono mb-3">
+                <span className="font-semibold" style={{ color: 'var(--accent)' }}>
+                  Systems Architecture Blueprint
+                </span>
+                <span aria-hidden="true" style={{ color: 'var(--text-muted)' }}>·</span>
+                <span style={{ color: 'var(--text-muted)' }}>C++20 & Storage Engines</span>
               </div>
 
               <h3 
@@ -76,22 +75,22 @@ export const EngineeringSection: React.FC = () => {
                 className="text-xs sm:text-sm leading-relaxed mb-6"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                Investigating the architectural lineages of Google's LevelDB, Meta's RocksDB, and CockroachDB's Pebble. Specifications include POSIX crash consistency via directory fsync, lock-free SkipLists, Monkey Bloom filter allocation, and leveled compaction invariants.
+                An exhaustive breakdown of Log-Structured Merge-Trees across LevelDB, RocksDB, and Pebble. Covers directory fsync semantics, concurrent SkipLists, Monkey Bloom filter allocation, and leveled tombstone purging invariants.
               </p>
 
               <div 
-                className="space-y-2.5 mb-6 text-xs font-mono"
+                className="space-y-2 mb-6 text-xs font-mono"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-start gap-2">
                   <span style={{ color: 'var(--accent)' }}>▸</span>
                   <span>Tombstone purging: bottom-most level mathematical proofs</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-start gap-2">
                   <span style={{ color: 'var(--accent)' }}>▸</span>
                   <span>POSIX directory metadata durability across power cuts</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-start gap-2">
                   <span style={{ color: 'var(--accent)' }}>▸</span>
                   <span>32KB chunked WAL framing with masked CRC32C checksums</span>
                 </div>
@@ -100,15 +99,14 @@ export const EngineeringSection: React.FC = () => {
 
             <button
               onClick={() => setSelectedArticle(articlesData[0])}
-              className="w-full py-3 px-4 rounded-xl text-xs font-mono font-medium flex items-center justify-center gap-2 border transition-all cursor-pointer"
+              className="w-full py-3 px-4 rounded text-xs font-mono font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer"
               style={{
-                backgroundColor: 'var(--accent-muted)',
-                borderColor: 'var(--border-strong)',
-                color: 'var(--accent)',
+                backgroundColor: 'var(--accent)',
+                color: 'var(--bg-main)',
               }}
             >
               <BookOpen className="w-4 h-4" />
-              <span>Read Full Architectural Blueprint</span>
+              <span>Read Full Architectural Article</span>
             </button>
           </div>
 
@@ -119,17 +117,17 @@ export const EngineeringSection: React.FC = () => {
           {articlesData.map((article) => (
             <article 
               key={article.id}
-              className="p-6 rounded-2xl border transition-all flex flex-col justify-between group cursor-pointer"
+              onClick={() => setSelectedArticle(article)}
+              className="p-6 rounded-lg border transition-all flex flex-col justify-between group cursor-pointer hover:border-opacity-100"
               style={{
                 backgroundColor: 'var(--bg-card)',
                 borderColor: 'var(--border-subtle)',
               }}
-              onClick={() => setSelectedArticle(article)}
             >
               <div>
                 <div 
                   className="flex items-center gap-3 text-xs font-mono mb-3"
-                  style={{ color: 'var(--text-secondary)' }}
+                  style={{ color: 'var(--text-muted)' }}
                 >
                   <div className="flex items-center gap-1">
                     <Calendar className="w-3.5 h-3.5" style={{ color: 'var(--accent)' }} />
@@ -143,14 +141,14 @@ export const EngineeringSection: React.FC = () => {
                 </div>
 
                 <h4 
-                  className="text-base font-bold mb-2 transition-colors leading-snug"
+                  className="text-base font-bold mb-2 transition-colors leading-snug group-hover:underline"
                   style={{ color: 'var(--text-primary)' }}
                 >
                   {article.title}
                 </h4>
 
                 <p 
-                  className="text-xs leading-relaxed mb-4"
+                  className="text-xs leading-relaxed mb-6"
                   style={{ color: 'var(--text-secondary)' }}
                 >
                   {article.summary}
@@ -166,7 +164,7 @@ export const EngineeringSection: React.FC = () => {
                       style={{
                         backgroundColor: 'var(--bg-secondary)',
                         borderColor: 'var(--border-subtle)',
-                        color: 'var(--text-secondary)',
+                        color: 'var(--text-muted)',
                       }}
                     >
                       {tag}
@@ -194,43 +192,75 @@ export const EngineeringSection: React.FC = () => {
 
       {/* Article Reader Modal */}
       {selectedArticle && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm overflow-y-auto">
-          <div className="relative w-full max-w-3xl bg-[#0e110f] border border-white/10 rounded-2xl shadow-2xl my-8 overflow-hidden max-h-[90vh] flex flex-col">
-            
-            <div className="p-6 border-b border-white/[0.08] bg-[#141815] flex items-center justify-between shrink-0">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto">
+          <div 
+            className="relative w-full max-w-3xl border rounded-lg shadow-2xl my-6 overflow-hidden max-h-[92vh] flex flex-col"
+            style={{
+              backgroundColor: 'var(--bg-card)',
+              borderColor: 'var(--border-strong)',
+            }}
+          >
+            {/* Modal Header */}
+            <div 
+              className="p-5 sm:p-6 border-b flex items-center justify-between shrink-0"
+              style={{
+                backgroundColor: 'var(--bg-secondary)',
+                borderColor: 'var(--border-subtle)',
+              }}
+            >
               <div>
-                <div className="flex items-center gap-2 text-xs font-mono text-[#b7f36b] mb-1">
+                <div className="flex items-center gap-2 text-xs font-mono mb-1" style={{ color: 'var(--accent)' }}>
                   <span>{selectedArticle.publishedDate}</span>
                   <span aria-hidden="true">·</span>
                   <span>{selectedArticle.readTime}</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-[#F3F4EF]">
+                <h3 className="text-xl sm:text-2xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
                   {selectedArticle.title}
                 </h3>
               </div>
 
               <button
                 onClick={() => setSelectedArticle(null)}
-                className="p-2 text-[#9A9F99] hover:text-[#F3F4EF] hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
+                className="p-2 rounded border transition-colors cursor-pointer hover:opacity-80"
+                style={{
+                  backgroundColor: 'var(--bg-main)',
+                  borderColor: 'var(--border-subtle)',
+                  color: 'var(--text-secondary)',
+                }}
                 aria-label="Close article"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="p-6 sm:p-8 overflow-y-auto space-y-6 text-[#9A9F99] text-sm leading-relaxed prose prose-invert max-w-none">
-              <div className="whitespace-pre-wrap font-sans">
+            {/* Content Body */}
+            <div 
+              className="p-6 sm:p-8 overflow-y-auto space-y-6 text-sm leading-relaxed font-sans"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              <div className="whitespace-pre-wrap">
                 {selectedArticle.contentMarkdown}
               </div>
             </div>
 
-            <div className="p-4 border-t border-white/[0.08] bg-[#141815] flex items-center justify-between shrink-0">
-              <span className="text-xs font-mono text-[#9A9F99]">
+            {/* Modal Footer */}
+            <div 
+              className="p-4 border-t flex items-center justify-between shrink-0"
+              style={{
+                backgroundColor: 'var(--bg-secondary)',
+                borderColor: 'var(--border-subtle)',
+              }}
+            >
+              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
                 Written by Amit Kumar
               </span>
               <button
                 onClick={() => setSelectedArticle(null)}
-                className="px-4 py-2 text-xs font-mono text-[#090B0A] bg-[#b7f36b] font-semibold rounded-lg hover:bg-[#c9f984] cursor-pointer"
+                className="px-4 py-2 text-xs font-mono font-semibold rounded transition-colors cursor-pointer"
+                style={{
+                  backgroundColor: 'var(--accent)',
+                  color: 'var(--bg-main)',
+                }}
               >
                 Close Article
               </button>

@@ -8,7 +8,11 @@ import {
   CheckCircle2, 
   Code, 
   FileCode, 
-  ArrowLeft 
+  ArrowLeft,
+  Server,
+  Zap,
+  ArrowRight,
+  ArrowUpRight
 } from 'lucide-react';
 import { Project } from '../types/portfolio';
 
@@ -37,66 +41,111 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
   const { caseStudy } = project;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto">
       <div 
-        className="relative w-full max-w-4xl bg-[#0e110f] border border-white/10 rounded-2xl shadow-2xl my-8 overflow-hidden max-h-[90vh] flex flex-col"
+        className="relative w-full max-w-4xl border rounded-lg shadow-2xl my-6 overflow-hidden max-h-[92vh] flex flex-col transition-all"
+        style={{
+          backgroundColor: 'var(--bg-card)',
+          borderColor: 'var(--border-strong)',
+        }}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
       >
         {/* Modal Top Header */}
-        <div className="p-6 border-b border-white/[0.08] flex items-center justify-between bg-[#141815] shrink-0">
+        <div 
+          className="p-5 sm:p-6 border-b flex flex-wrap items-center justify-between gap-4 shrink-0"
+          style={{ 
+            backgroundColor: 'var(--bg-secondary)', 
+            borderColor: 'var(--border-subtle)' 
+          }}
+        >
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-[#b7f36b] mb-1">
-              <span>{project.category} Case Study</span>
-              <span aria-hidden="true">·</span>
-              <span className="text-[#9A9F99]">{project.status}</span>
+            <div className="flex items-center gap-2 text-xs font-mono mb-1">
+              <span className="font-semibold" style={{ color: 'var(--accent)' }}>
+                {project.category} Engineering Deep-Dive
+              </span>
+              <span aria-hidden="true" style={{ color: 'var(--text-muted)' }}>·</span>
+              <span style={{ color: 'var(--text-muted)' }}>{project.status}</span>
             </div>
-            <h2 id="modal-title" className="text-2xl font-bold text-[#F3F4EF]">
+            <h2 id="modal-title" className="text-xl sm:text-2xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
               {project.title}
             </h2>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {project.githubUrl && (
               <a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-[#F3F4EF] bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded border transition-colors hover:opacity-80"
+                style={{
+                  backgroundColor: 'var(--bg-main)',
+                  borderColor: 'var(--border-subtle)',
+                  color: 'var(--text-primary)',
+                }}
               >
                 <Github className="w-3.5 h-3.5" />
                 <span>Source</span>
+                <ArrowUpRight className="w-3 h-3" />
+              </a>
+            )}
+            {project.demoUrl && (
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded border transition-colors hover:opacity-80"
+                style={{
+                  backgroundColor: 'var(--bg-main)',
+                  borderColor: 'var(--border-subtle)',
+                  color: 'var(--text-primary)',
+                }}
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span>Demo</span>
               </a>
             )}
             <button
               onClick={onClose}
-              className="p-2 text-[#9A9F99] hover:text-[#F3F4EF] hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
+              className="p-2 rounded border transition-colors cursor-pointer ml-1 hover:opacity-80"
+              style={{
+                backgroundColor: 'var(--bg-main)',
+                borderColor: 'var(--border-subtle)',
+                color: 'var(--text-secondary)',
+              }}
               aria-label="Close case study dialog"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
           </div>
         </div>
 
         {/* Modal Scrollable Content */}
-        <div className="p-6 sm:p-8 overflow-y-auto space-y-8 text-[#9A9F99] text-sm leading-relaxed">
+        <div className="p-6 sm:p-8 overflow-y-auto space-y-8 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
           
           {/* 1. Problem & Motivation */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-xl bg-[#141815] border border-white/[0.06]">
+          <div 
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded border"
+            style={{ 
+              backgroundColor: 'var(--bg-secondary)', 
+              borderColor: 'var(--border-subtle)' 
+            }}
+          >
             <div>
-              <h4 className="text-xs font-mono uppercase tracking-wider text-[#b7f36b] mb-2">
-                Problem Statement
+              <h4 className="text-xs font-mono uppercase tracking-wider mb-2 font-semibold" style={{ color: 'var(--accent)' }}>
+                Problem Invariant
               </h4>
-              <p className="text-xs sm:text-sm text-[#F3F4EF] leading-relaxed">
+              <p className="text-xs sm:text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                 {caseStudy.problemStatement}
               </p>
             </div>
             <div>
-              <h4 className="text-xs font-mono uppercase tracking-wider text-[#b7f36b] mb-2">
-                Why I Engineered This
+              <h4 className="text-xs font-mono uppercase tracking-wider mb-2 font-semibold" style={{ color: 'var(--accent)' }}>
+                Technical Motivation
               </h4>
-              <p className="text-xs sm:text-sm text-[#F3F4EF] leading-relaxed">
+              <p className="text-xs sm:text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                 {caseStudy.whyIBuiltIt}
               </p>
             </div>
@@ -104,21 +153,35 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
           {/* 2. Architecture Breakdown */}
           <div>
-            <h3 className="text-base font-bold text-[#F3F4EF] mb-4 flex items-center gap-2">
-              <Layers className="w-4 h-4 text-[#b7f36b]" />
-              <span>Architectural Modules</span>
+            <h3 className="text-base font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+              <Layers className="w-4 h-4" style={{ color: 'var(--accent)' }} />
+              <span>Architectural Modules & Subsystems</span>
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {caseStudy.architectureComponents.map((comp, idx) => (
-                <div key={idx} className="p-4 rounded-xl bg-[#101310] border border-white/[0.06]">
+                <div 
+                  key={idx} 
+                  className="p-4 rounded border transition-colors"
+                  style={{ 
+                    backgroundColor: 'var(--bg-secondary)', 
+                    borderColor: 'var(--border-subtle)' 
+                  }}
+                >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs font-semibold text-[#F3F4EF]">{comp.name}</span>
-                    <span className="text-[10px] font-mono text-[#b7f36b] px-1.5 py-0.5 rounded bg-white/5">
+                    <span className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>{comp.name}</span>
+                    <span 
+                      className="text-[10px] font-mono px-2 py-0.5 rounded border"
+                      style={{ 
+                        backgroundColor: 'var(--bg-main)', 
+                        borderColor: 'var(--border-subtle)',
+                        color: 'var(--accent)' 
+                      }}
+                    >
                       {comp.tech}
                     </span>
                   </div>
-                  <p className="text-xs text-[#9A9F99] leading-relaxed">
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                     {comp.role}
                   </p>
                 </div>
@@ -128,16 +191,23 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
           {/* 3. Technology Rationale */}
           <div>
-            <h3 className="text-base font-bold text-[#F3F4EF] mb-4">
-              Technology Decisions & Justification
+            <h3 className="text-base font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+              Technology Decisions & Engineering Trade-Offs
             </h3>
             <div className="space-y-3">
               {caseStudy.techRationale.map((rationale, idx) => (
-                <div key={idx} className="p-3.5 rounded-lg bg-[#141815] border border-white/[0.04] flex items-start gap-3">
-                  <span className="text-xs font-mono font-semibold text-[#b7f36b] shrink-0 mt-0.5">
+                <div 
+                  key={idx} 
+                  className="p-3.5 rounded border flex items-start gap-3"
+                  style={{ 
+                    backgroundColor: 'var(--bg-secondary)', 
+                    borderColor: 'var(--border-subtle)' 
+                  }}
+                >
+                  <span className="text-xs font-mono font-semibold shrink-0 mt-0.5" style={{ color: 'var(--accent)' }}>
                     {rationale.tech}
                   </span>
-                  <p className="text-xs text-[#9A9F99] leading-relaxed">
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                     {rationale.reason}
                   </p>
                 </div>
@@ -147,23 +217,38 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
           {/* 4. Engineering Challenges & Trade-offs */}
           <div>
-            <h3 className="text-base font-bold text-[#F3F4EF] mb-4 flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-[#b7f36b]" />
-              <span>Hard Engineering Challenges & Trade-offs</span>
+            <h3 className="text-base font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+              <AlertTriangle className="w-4 h-4" style={{ color: 'var(--accent)' }} />
+              <span>Hard Engineering Edge Cases</span>
             </h3>
 
             <div className="space-y-4">
               {caseStudy.engineeringChallenges.map((item, idx) => (
-                <div key={idx} className="p-4 rounded-xl bg-[#141815] border border-white/[0.06]">
-                  <div className="text-xs font-semibold text-[#F3F4EF] mb-2 flex items-start gap-2">
-                    <span className="text-[#b7f36b]">Challenge:</span>
+                <div 
+                  key={idx} 
+                  className="p-4 rounded border"
+                  style={{ 
+                    backgroundColor: 'var(--bg-secondary)', 
+                    borderColor: 'var(--border-subtle)' 
+                  }}
+                >
+                  <div className="text-xs font-semibold mb-2 flex items-start gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <span style={{ color: 'var(--accent)' }}>Challenge:</span>
                     <span>{item.challenge}</span>
                   </div>
-                  <div className="text-xs text-[#9A9F99] mb-2 pl-4 border-l border-[#b7f36b]/30">
-                    <span className="text-white font-mono">Solution:</span> {item.solution}
+                  <div 
+                    className="text-xs mb-2 pl-4 border-l"
+                    style={{ borderColor: 'var(--accent)', color: 'var(--text-secondary)' }}
+                  >
+                    <span className="font-mono font-semibold" style={{ color: 'var(--text-primary)' }}>Solution: </span>
+                    {item.solution}
                   </div>
-                  <div className="text-xs text-[#9A9F99] pl-4 border-l border-amber-500/30">
-                    <span className="text-amber-400 font-mono">Trade-off:</span> {item.tradeoff}
+                  <div 
+                    className="text-xs pl-4 border-l border-amber-500/40"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
+                    <span className="text-amber-400 font-mono font-semibold">Trade-off: </span>
+                    {item.tradeoff}
                   </div>
                 </div>
               ))}
@@ -174,34 +259,44 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           {caseStudy.codeExcerpt && (
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-mono text-[#b7f36b] flex items-center gap-1.5">
+                <span className="text-xs font-mono flex items-center gap-1.5" style={{ color: 'var(--accent)' }}>
                   <FileCode className="w-3.5 h-3.5" />
                   <span>{caseStudy.codeExcerpt.filename}</span>
                 </span>
-                <span className="text-[11px] font-mono text-[#9A9F99]">
+                <span className="text-[11px] font-mono" style={{ color: 'var(--text-muted)' }}>
                   {caseStudy.codeExcerpt.language.toUpperCase()}
                 </span>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#080a08] border border-white/10 font-mono text-xs overflow-x-auto text-[#e2e8f0]">
+              <div 
+                className="p-4 rounded border font-mono text-xs overflow-x-auto"
+                style={{ 
+                  backgroundColor: 'var(--bg-main)', 
+                  borderColor: 'var(--border-strong)',
+                  color: 'var(--text-primary)' 
+                }}
+              >
                 <pre>{caseStudy.codeExcerpt.snippet}</pre>
               </div>
-              <p className="text-xs text-[#9A9F99] mt-2 italic">
+              <p className="text-xs mt-2 italic" style={{ color: 'var(--text-muted)' }}>
                 {caseStudy.codeExcerpt.explanation}
               </p>
             </div>
           )}
 
           {/* 6. What I Learned & Future Improvements */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-white/[0.08]">
+          <div 
+            className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t"
+            style={{ borderColor: 'var(--border-subtle)' }}
+          >
             <div>
-              <h4 className="text-xs font-mono uppercase tracking-wider text-[#F3F4EF] mb-2">
-                Engineering Learnings
+              <h4 className="text-xs font-mono uppercase tracking-wider mb-2 font-semibold" style={{ color: 'var(--text-primary)' }}>
+                Core Learnings
               </h4>
-              <ul className="space-y-1.5 text-xs text-[#9A9F99]">
+              <ul className="space-y-1.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
                 {caseStudy.learnings.map((l, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <span className="text-[#b7f36b]">✓</span>
+                    <span style={{ color: 'var(--accent)' }}>✓</span>
                     <span>{l}</span>
                   </li>
                 ))}
@@ -209,13 +304,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             </div>
 
             <div>
-              <h4 className="text-xs font-mono uppercase tracking-wider text-[#F3F4EF] mb-2">
-                Future Improvements
+              <h4 className="text-xs font-mono uppercase tracking-wider mb-2 font-semibold" style={{ color: 'var(--text-primary)' }}>
+                Future Roadmap
               </h4>
-              <ul className="space-y-1.5 text-xs text-[#9A9F99]">
+              <ul className="space-y-1.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
                 {caseStudy.futureImprovements.map((imp, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <span className="text-[#9A9F99]">→</span>
+                    <span style={{ color: 'var(--text-muted)' }}>→</span>
                     <span>{imp}</span>
                   </li>
                 ))}
@@ -226,15 +321,25 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         </div>
 
         {/* Modal Bottom Footer */}
-        <div className="p-4 border-t border-white/[0.08] bg-[#141815] flex items-center justify-between shrink-0">
-          <span className="text-xs font-mono text-[#9A9F99]">
-            Case study by Amit Kumar
+        <div 
+          className="p-4 border-t flex items-center justify-between shrink-0"
+          style={{ 
+            backgroundColor: 'var(--bg-secondary)', 
+            borderColor: 'var(--border-subtle)' 
+          }}
+        >
+          <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+            Engineering case study by Amit Kumar
           </span>
           <button
             onClick={onClose}
-            className="px-4 py-2 text-xs font-mono text-[#090B0A] bg-[#b7f36b] hover:bg-[#c9f984] font-semibold rounded-lg transition-colors cursor-pointer"
+            className="px-4 py-2 text-xs font-mono font-semibold rounded transition-colors cursor-pointer"
+            style={{
+              backgroundColor: 'var(--accent)',
+              color: 'var(--bg-main)',
+            }}
           >
-            Close Case Study
+            Close Deep-Dive
           </button>
         </div>
 

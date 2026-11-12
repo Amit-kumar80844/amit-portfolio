@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { useTheme } from '../context/ThemeProvider';
 
 interface StorageEngineProps {
   interactive?: boolean;
@@ -11,6 +12,7 @@ export const StorageEngine3D: React.FC<StorageEngineProps> = ({ interactive = tr
   const [activeLayer, setActiveLayer] = useState<'all' | 'memtable' | 'wal' | 'l0' | 'l1'>('all');
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [controlsCollapsed, setControlsCollapsed] = useState<boolean>(false);
+  const { currentTheme, themeConfig } = useTheme();
 
   useEffect(() => {
     const container = mountRef.current;
@@ -35,7 +37,9 @@ export const StorageEngine3D: React.FC<StorageEngineProps> = ({ interactive = tr
     })();
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2('#090B0A', 0.05);
+    const isLight = currentTheme === 'swiss-minimal';
+    const fogColor = isLight ? '#E5E7EB' : (themeConfig.bgMain || '#090B0A');
+    scene.fog = new THREE.FogExp2(fogColor, 0.04);
 
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
     camera.position.set(5.5, 4.2, 6.5);
@@ -58,15 +62,16 @@ export const StorageEngine3D: React.FC<StorageEngineProps> = ({ interactive = tr
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
     pmrem.dispose();
 
-    // Lighting: Warm key + cool hemisphere fill
-    const hemiLight = new THREE.HemisphereLight('#b7f36b', '#101310', 0.8);
+    // Lighting: Accent-tinted key + ambient fill
+    const accentColor = themeConfig.accent || '#b7f36b';
+    const hemiLight = new THREE.HemisphereLight(accentColor, isLight ? '#cbd5e1' : '#101310', 0.85);
     scene.add(hemiLight);
 
-    const dirLight = new THREE.DirectionalLight('#F3F4EF', 1.8);
+    const dirLight = new THREE.DirectionalLight(isLight ? '#ffffff' : '#F3F4EF', isLight ? 1.4 : 1.8);
     dirLight.position.set(5, 8, 4);
     scene.add(dirLight);
 
-    const rimLight = new THREE.DirectionalLight('#b7f36b', 1.2);
+    const rimLight = new THREE.DirectionalLight(accentColor, 1.2);
     rimLight.position.set(-5, 3, -4);
     scene.add(rimLight);
 
@@ -76,17 +81,17 @@ export const StorageEngine3D: React.FC<StorageEngineProps> = ({ interactive = tr
 
     // Shared materials
     const darkMat = new THREE.MeshStandardMaterial({
-      color: '#141815',
+      color: isLight ? '#334155' : '#141815',
       roughness: 0.25,
       metalness: 0.85,
     });
     const accentMat = new THREE.MeshStandardMaterial({
-      color: '#b7f36b',
+      color: accentColor,
       roughness: 0.15,
       metalness: 0.9,
     });
     const subtleMat = new THREE.MeshStandardMaterial({
-      color: '#2a332c',
+      color: isLight ? '#94a3b8' : '#2a332c',
       roughness: 0.4,
       metalness: 0.6,
     });
@@ -204,14 +209,13 @@ export const StorageEngine3D: React.FC<StorageEngineProps> = ({ interactive = tr
     const shadowMat = new THREE.MeshBasicMaterial({
       color: '#000000',
       transparent: true,
-      opacity: 0.45,
+      opacity: isLight ? 0.2 : 0.45,
     });
     const shadowMesh = new THREE.Mesh(shadowGeo, shadowMat);
     shadowMesh.position.y = -0.21;
     rootGroup.add(shadowMesh);
 
     // Mouse / Interaction tracking
-    let mouseX = 0;
     let targetRotationY = 0;
     let targetRotationX = 0;
 
@@ -227,11 +231,8 @@ export const StorageEngine3D: React.FC<StorageEngineProps> = ({ interactive = tr
 
     // Animation Loop
     let animId = 0;
-    let clock = new THREE.Clock();
 
     const animate = () => {
-      const dt = clock.getDelta();
-
       if (!isPaused) {
         rootGroup.rotation.y += 0.005;
         // Subtle layer rotation to represent concurrent execution
@@ -270,19 +271,31 @@ export const StorageEngine3D: React.FC<StorageEngineProps> = ({ interactive = tr
         renderer.domElement.parentNode.removeChild(renderer.domElement);
       }
     };
-  }, [isPaused]);
+  }, [isPaused, currentTheme, themeConfig]);
 
   return (
-    <div className="relative w-full h-[480px] bg-[#0c0f0d] rounded-2xl border border-white/10 overflow-hidden flex flex-col items-center justify-center">
+    <div 
+      className="relative w-full h-[480px] rounded-lg border overflow-hidden flex flex-col items-center justify-center transition-colors"
+      style={{
+        backgroundColor: 'var(--bg-card)',
+        borderColor: 'var(--border-strong)',
+      }}
+    >
       {/* 3D Scene Viewport */}
       <div ref={mountRef} className="w-full h-full cursor-grab active:cursor-grabbing" />
 
       {/* Floating Header Info */}
       <div className="absolute top-4 left-5 pointer-events-none">
-        <span className="text-[11px] font-mono tracking-wider uppercase text-[#b7f36b] block">
+        <span 
+          className="text-[11px] font-mono tracking-wider uppercase block"
+          style={{ color: 'var(--accent)' }}
+        >
           Interactive Architecture Simulation
         </span>
-        <h4 className="text-sm font-semibold text-[#F3F4EF] tracking-tight">
+        <h4 
+          className="text-sm font-semibold tracking-tight"
+          style={{ color: 'var(--text-primary)' }}
+        >
           LSM-Tree Tiered Memory & Storage Hierarchy
         </h4>
       </div>
@@ -290,30 +303,48 @@ export const StorageEngine3D: React.FC<StorageEngineProps> = ({ interactive = tr
       {/* Collapsible Bottom Control Dock adhering to Three.js UX directives */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 max-w-[94vw] w-auto transition-transform duration-200">
         {!controlsCollapsed ? (
-          <div className="bg-[#141815]/90 border border-white/10 rounded-xl px-4 py-2.5 shadow-2xl flex items-center gap-3 backdrop-blur-md">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#9A9F99]">
-              <span className="text-[#b7f36b]">Tiers:</span>
+          <div 
+            className="border rounded-md px-4 py-2.5 shadow-2xl flex items-center gap-3 backdrop-blur-md transition-colors"
+            style={{
+              backgroundColor: 'var(--bg-secondary)',
+              borderColor: 'var(--border-subtle)',
+            }}
+          >
+            <div 
+              className="flex items-center gap-2 text-xs font-mono"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              <span className="font-semibold" style={{ color: 'var(--accent)' }}>Tiers:</span>
               <span>MemTable</span>
-              <span>·</span>
+              <span aria-hidden="true">·</span>
               <span>WAL 32KB</span>
-              <span>·</span>
+              <span aria-hidden="true">·</span>
               <span>L0 SSTable</span>
-              <span>·</span>
+              <span aria-hidden="true">·</span>
               <span>L1 Compaction</span>
             </div>
 
-            <div className="h-4 w-px bg-white/10 mx-1" />
+            <div 
+              className="h-4 w-px mx-1" 
+              style={{ backgroundColor: 'var(--border-subtle)' }} 
+            />
 
             <button
               onClick={() => setIsPaused(!isPaused)}
-              className="text-xs px-2.5 py-1 rounded bg-white/5 hover:bg-white/10 text-[#F3F4EF] font-mono transition-colors"
+              className="text-xs px-2.5 py-1 rounded font-mono transition-colors border"
+              style={{
+                backgroundColor: 'var(--bg-main)',
+                borderColor: 'var(--border-subtle)',
+                color: 'var(--text-primary)',
+              }}
             >
               {isPaused ? '▶ Resume' : '⏸ Pause'}
             </button>
 
             <button
               onClick={() => setControlsCollapsed(true)}
-              className="text-xs text-[#9A9F99] hover:text-white px-1.5 py-1 transition-colors"
+              className="text-xs px-1.5 py-1 transition-colors hover:underline"
+              style={{ color: 'var(--text-muted)' }}
               title="Collapse Dock"
             >
               ▾ Hide
@@ -322,7 +353,12 @@ export const StorageEngine3D: React.FC<StorageEngineProps> = ({ interactive = tr
         ) : (
           <button
             onClick={() => setControlsCollapsed(false)}
-            className="bg-[#141815]/90 border border-white/10 rounded-lg px-3 py-1.5 text-xs font-mono text-[#b7f36b] hover:bg-white/5 transition-colors shadow-lg"
+            className="border rounded-md px-3 py-1.5 text-xs font-mono transition-colors shadow-lg"
+            style={{
+              backgroundColor: 'var(--bg-secondary)',
+              borderColor: 'var(--border-subtle)',
+              color: 'var(--accent)',
+            }}
           >
             ▴ Show Simulation Controls
           </button>

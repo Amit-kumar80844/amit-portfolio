@@ -1,12 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   :root {
-    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    --font-heading: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    --font-display: 'DM Sans', system-ui, sans-serif;
+    --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+    --font-heading: 'DM Sans', system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -14,7 +24,9 @@
     color: var(--text-primary, #F3F4EF);
     font-family: var(--font-sans);
     overflow-x: hidden;
-    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.55;
     transition: background-color 0.25s ease, color 0.25s ease;
   }
 
@@ -26,38 +38,100 @@
   code, pre, .font-mono {
     font-family: var(--font-mono);
   }
+
+  /* Focus visible styles */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
 }
 
-/* Subtle engineering blueprint grid pattern */
-.bg-grid-pattern {
-  background-size: 36px 36px;
-  background-image: 
+/* One consistent editorial rhythm across the long-form page. */
+section[id]:not(#hero) {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+}
+
+/* Keep the cards tactile, but remove the rounded-dashboard look. */
+section .rounded-lg {
+  border-radius: 0.5rem;
+}
+
+/* Project cards should respond as a group, not as a collection of isolated widgets. */
+#projects .group {
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+#projects .group:hover {
+  border-color: color-mix(in srgb, var(--border-strong) 65%, var(--accent) 35%);
+}
+
+@media (max-width: 639px) {
+  #hero {
+    min-height: auto;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  #hero h1 {
+    font-size: clamp(2.6rem, 12vw, 4rem);
+    line-height: 1.02;
+  }
+
+  #hero .hero-portrait {
+    margin-top: 0.5rem;
+  }
+}
+
+/* Dot grid pattern for section backgrounds */
+.bg-dot-pattern {
+  background-size: 28px 28px;
+  background-image: radial-gradient(circle, var(--border-subtle) 1px, transparent 1px);
+}
+
+/* Fine grid pattern */
+.bg-grid-fine {
+  background-size: 24px 24px;
+  background-image:
     linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
     linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
 }
 
-.bg-dot-pattern {
-  background-size: 24px 24px;
-  background-image: radial-gradient(circle, var(--border-subtle) 1px, transparent 1px);
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
+  z-index: 100;
+  transform-origin: left;
+  transition: none;
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #090B0A;
-}
-::-webkit-scrollbar-thumb {
-  background: #1e2420;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #2b332e;
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* Selection color */
+::selection {
+  background: var(--accent);
+  color: var(--bg-main);
 }
 
-/* Print styles for resume */
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print styles */
 @media print {
   body {
     background-color: #ffffff !important;
@@ -75,8 +149,5 @@
     max-height: none !important;
     overflow: visible !important;
   }
-  @page {
-    margin: 1cm;
-    size: A4 portrait;
-  }
+  @page { margin: 1cm; size: A4 portrait; }
 }

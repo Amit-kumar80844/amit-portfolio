@@ -3,84 +3,82 @@ import { skillsData } from '../content/extraData';
 
 export const SkillsSection: React.FC = () => {
   return (
-    <section 
-      id="skills" 
-      className="py-20 border-b transition-colors"
+    <section
+      id="skills"
+      className="py-24 border-b transition-colors"
       style={{ borderColor: 'var(--border-subtle)' }}
     >
       <div className="max-w-7xl mx-auto px-6">
-        
+
         {/* Section Header */}
-        <div className="mb-12">
-          <span 
-            className="text-xs font-mono tracking-wider uppercase font-semibold block mb-2"
-            style={{ color: 'var(--accent)' }}
-          >
-            04. Technical Capabilities
-          </span>
-          <h2 
-            className="text-3xl sm:text-4xl font-bold tracking-tight"
-            style={{ color: 'var(--text-primary)' }}
-          >
-            Skills & Core Tooling
-          </h2>
-          <p 
-            className="text-xs font-mono mt-2 max-w-xl"
+        <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <span
+              className="text-xs font-mono tracking-widest uppercase font-semibold block mb-3"
+              style={{ color: 'var(--accent)' }}
+            >
+              04 — Technical Capabilities
+            </span>
+            <h2
+              className="text-4xl sm:text-5xl font-bold tracking-tight"
+              style={{ color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+            >
+              Core Competencies.
+            </h2>
+          </div>
+          <p
+            className="text-sm max-w-md leading-relaxed"
             style={{ color: 'var(--text-secondary)' }}
           >
-            Grouped by functional engineering domain. No artificial progress bars or fabricated percentages.
+            Structured by systems layer. No arbitrary percentages or progress bars — only verified production languages, frameworks, and low-level primitives.
           </p>
         </div>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Skills table — editorial row layout */}
+        <div className="border-t" style={{ borderColor: 'var(--border-subtle)' }}>
           {skillsData.map((group, idx) => (
-            <div 
+            <div
               key={idx}
-              className="p-6 rounded-2xl border transition-all flex flex-col justify-between"
-              style={{
-                backgroundColor: 'var(--bg-card)',
-                borderColor: 'var(--border-strong)',
-              }}
+              className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-6 border-b items-start"
+              style={{ borderColor: 'var(--border-subtle)' }}
             >
-              <div>
-                <h3 
-                  className="text-sm font-mono font-semibold tracking-wide uppercase mb-4"
+              {/* Domain label */}
+              <div className="md:col-span-3">
+                <span
+                  className="text-xs font-mono uppercase tracking-widest font-semibold"
                   style={{ color: 'var(--accent)' }}
                 >
                   {group.category}
-                </h3>
+                </span>
+              </div>
 
-                <div className="flex flex-wrap gap-2">
-                  {group.skills.map((skill, sIdx) => {
-                    const isHighlighted = skill.highlight;
-                    return (
-                      <span
-                        key={sIdx}
-                        className="text-xs font-mono px-3 py-1.5 rounded-lg border transition-colors"
-                        style={{
-                          backgroundColor: isHighlighted ? 'var(--accent-muted)' : 'var(--bg-secondary)',
-                          borderColor: isHighlighted ? 'var(--border-strong)' : 'var(--border-subtle)',
-                          color: isHighlighted ? 'var(--text-primary)' : 'var(--text-secondary)',
-                          fontWeight: isHighlighted ? 600 : 400,
-                        }}
-                      >
-                        {skill.name}
-                      </span>
-                    );
-                  })}
+              {/* Skills — inline text, not badges */}
+              <div className="md:col-span-9">
+                <div className="flex flex-wrap gap-x-6 gap-y-2">
+                  {group.skills.map((skill, sIdx) => (
+                    <span
+                      key={sIdx}
+                      className="text-sm font-mono transition-colors"
+                      style={{
+                        color: skill.highlight ? 'var(--text-primary)' : 'var(--text-secondary)',
+                        fontWeight: skill.highlight ? 500 : 400,
+                      }}
+                    >
+                      {skill.name}
+                    </span>
+                  ))}
                 </div>
               </div>
-
-              <div 
-                className="mt-6 pt-3 border-t text-[11px] font-mono"
-                style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
-              >
-                {group.skills.filter(s => s.highlight).length} primary specializations
-              </div>
-
             </div>
           ))}
+        </div>
+
+        {/* Footer note */}
+        <div
+          className="mt-8 text-xs font-mono"
+          style={{ color: 'var(--text-muted)' }}
+        >
+          Highlighted entries are primary day-to-day tools. All others are actively used or studied.
         </div>
 
       </div>

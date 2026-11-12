@@ -29,6 +29,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     root.style.setProperty('--accent-muted', themeConfig.accentMuted);
     root.style.setProperty('--border-subtle', themeConfig.borderSubtle);
     root.style.setProperty('--border-strong', themeConfig.borderStrong);
+    root.style.setProperty('--font-display', themeConfig.fontFamilyDisplay);
     root.style.setProperty('--font-heading', themeConfig.fontFamilyHeading);
     root.style.setProperty('--font-body', themeConfig.fontFamilyBody);
     root.style.setProperty('--font-mono', themeConfig.fontFamilyMono);
@@ -45,6 +46,16 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       document.body.style.backgroundColor = themeConfig.bgMain;
       document.body.style.color = themeConfig.textPrimary;
     }
+
+    // Scroll progress bar
+    const handleScroll = () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = total > 0 ? (scrolled / total) * 100 : 0;
+      document.documentElement.style.setProperty('--scroll-progress', `${progress}%`);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [currentTheme, themeConfig]);
 
   return (

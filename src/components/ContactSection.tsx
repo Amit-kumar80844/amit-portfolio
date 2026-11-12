@@ -56,7 +56,6 @@ export const ContactSection: React.FC = () => {
     }
     setSubmitted(true);
 
-    // Also attempt automatic trigger via dynamic anchor click
     try {
       const link = document.createElement('a');
       link.href = constructMailtoUrl();
@@ -66,231 +65,219 @@ export const ContactSection: React.FC = () => {
       link.click();
       document.body.removeChild(link);
     } catch {
-      // Fallback handled by rendered success card
+      // Fallback handled by rendered success view
     }
   };
 
   return (
     <section 
       id="contact" 
-      className="py-20 border-b transition-colors"
+      className="py-24 border-b transition-colors relative"
       style={{ borderColor: 'var(--border-subtle)' }}
     >
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Section Header */}
-        <div className="mb-12">
-          <span 
-            className="text-xs font-mono tracking-wider uppercase font-semibold block mb-2"
-            style={{ color: 'var(--accent)' }}
-          >
-            07. Initiate Dialogue
-          </span>
-          <h2 
-            className="text-3xl sm:text-4xl font-bold tracking-tight"
-            style={{ color: 'var(--text-primary)' }}
-          >
-            Get in touch.
-          </h2>
-          <p 
-            className="text-xs font-mono mt-2 max-w-xl"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            Currently open for Backend Engineering internships & new grad software roles. Let's discuss microservices or distributed systems.
-          </p>
+        <div className="mb-16">
+          <div className="flex items-center gap-2 mb-3">
+            <span 
+              className="text-xs font-mono tracking-widest uppercase font-semibold"
+              style={{ color: 'var(--accent)' }}
+            >
+              07 — Initiate Dialogue
+            </span>
+            <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>/ Opportunistic & Open Inquiries</span>
+          </div>
+          
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+            <h2 
+              className="text-4xl sm:text-5xl font-bold tracking-tight"
+              style={{ color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+            >
+              Let's Build Resilient Systems.
+            </h2>
+            <p 
+              className="text-sm max-w-md leading-relaxed"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              Open for Summer/Fall 2026 backend internships and 2027 full-time software engineering roles. Reach out directly or dispatch a message below.
+            </p>
+          </div>
         </div>
 
-        {/* 2-Column Split: Direct Channels vs. Contact Form */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        {/* 2-Column Editorial Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* Direct Channels (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col justify-between">
-            <div className="space-y-6">
-              
-              {/* Primary Email Box */}
-              <div 
-                className="p-6 rounded-2xl border transition-all"
-                style={{
-                  backgroundColor: 'var(--bg-card)',
-                  borderColor: 'var(--border-strong)',
-                }}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span 
-                    className="text-xs font-mono uppercase tracking-wider font-semibold block"
-                    style={{ color: 'var(--accent)' }}
-                  >
-                    Direct Email
-                  </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded border" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}>
-                    Replies within 24h
-                  </span>
-                </div>
-                
-                <div 
-                  className="text-base sm:text-lg font-bold mb-4 break-all font-mono"
-                  style={{ color: 'var(--text-primary)' }}
-                >
-                  {profileData.email}
-                </div>
-
-                <div className="flex flex-wrap items-center gap-2">
-                  <button
-                    onClick={() => handleCopyEmail(profileData.email)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded-lg transition-colors cursor-pointer"
-                    style={{
-                      backgroundColor: 'var(--accent)',
-                      color: 'var(--bg-main)',
-                    }}
-                    title="Copy email to clipboard"
-                  >
-                    {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                    <span>{copied ? 'Copied' : 'Copy Email'}</span>
-                  </button>
-
-                  <a
-                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(profileData.email)}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded-lg border transition-colors hover:scale-[1.02]"
-                    style={{
-                      backgroundColor: 'var(--bg-secondary)',
-                      borderColor: 'var(--border-subtle)',
-                      color: 'var(--text-primary)',
-                    }}
-                    title="Open directly in Gmail Web"
-                  >
-                    <ExternalLink className="w-3.5 h-3.5" />
-                    <span>Open in Gmail</span>
-                  </a>
-
-                  <a
-                    href={`mailto:${profileData.email}`}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded-lg border transition-colors hover:scale-[1.02]"
-                    style={{
-                      backgroundColor: 'var(--bg-secondary)',
-                      borderColor: 'var(--border-subtle)',
-                      color: 'var(--text-primary)',
-                    }}
-                    title="Open in your default mail application"
-                  >
-                    <Mail className="w-3.5 h-3.5" />
-                    <span>Mail Client</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* Verified Profiles */}
-              <div 
-                className="p-6 rounded-2xl border space-y-3"
-                style={{
-                  backgroundColor: 'var(--bg-secondary)',
-                  borderColor: 'var(--border-subtle)',
-                }}
-              >
-                <span 
-                  className="text-xs font-mono uppercase tracking-wider block mb-1 font-semibold"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  Verified Networks
-                </span>
-
-                <a
-                  href={profileData.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between p-3 rounded-xl border transition-colors text-xs font-mono group"
-                  style={{
-                    backgroundColor: 'var(--bg-card)',
-                    borderColor: 'var(--border-subtle)',
-                    color: 'var(--text-primary)',
-                  }}
-                >
-                  <div className="flex items-center gap-2">
-                    <Linkedin className="w-4 h-4" style={{ color: 'var(--accent)' }} />
-                    <span>LinkedIn (in/amit-kumar21)</span>
-                  </div>
-                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-
-                <a
-                  href={profileData.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between p-3 rounded-xl border transition-colors text-xs font-mono group"
-                  style={{
-                    backgroundColor: 'var(--bg-card)',
-                    borderColor: 'var(--border-subtle)',
-                    color: 'var(--text-primary)',
-                  }}
-                >
-                  <div className="flex items-center gap-2">
-                    <Github className="w-4 h-4" style={{ color: 'var(--accent)' }} />
-                    <span>GitHub (@Amit-kumar80844)</span>
-                  </div>
-                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-
-                <a
-                  href={profileData.leetcode}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between p-3 rounded-xl border transition-colors text-xs font-mono group"
-                  style={{
-                    backgroundColor: 'var(--bg-card)',
-                    borderColor: 'var(--border-subtle)',
-                    color: 'var(--text-primary)',
-                  }}
-                >
-                  <div className="flex items-center gap-2">
-                    <Code2 className="w-4 h-4" style={{ color: 'var(--accent)' }} />
-                    <span>LeetCode (@Amit_maur)</span>
-                  </div>
-                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-              </div>
-
-            </div>
-
+          {/* Left Column: Direct Communication Channels (5 cols) */}
+          <div className="lg:col-span-5 space-y-8">
+            
+            {/* Direct Email Hero Card */}
             <div 
-              className="pt-6 border-t text-xs font-mono mt-6"
-              style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}
-            >
-              <span className="block mb-0.5 font-semibold" style={{ color: 'var(--text-primary)' }}>Location:</span>
-              <span>IIIT Kottayam, Kerala & Patna, Bihar, India</span>
-            </div>
-
-          </div>
-
-          {/* Contact Form (7 cols) */}
-          <div className="lg:col-span-7">
-            <div 
-              className="p-6 sm:p-8 rounded-2xl border transition-all"
+              className="p-6 sm:p-8 rounded-lg border space-y-4"
               style={{
                 backgroundColor: 'var(--bg-card)',
                 borderColor: 'var(--border-strong)',
               }}
             >
-              <h3 
-                className="text-lg font-bold mb-2 flex items-center justify-between"
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: 'var(--accent)' }}>
+                  Primary Email Ingress
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded border" style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}>
+                  Verified Invariant
+                </span>
+              </div>
+
+              <div 
+                className="text-lg sm:text-xl font-bold font-mono tracking-tight break-all"
                 style={{ color: 'var(--text-primary)' }}
               >
-                <span>Send a Message</span>
-                <span className="text-[11px] font-mono font-normal" style={{ color: 'var(--text-secondary)' }}>
-                  Direct Transmission
+                {profileData.email}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 pt-2">
+                <button
+                  onClick={() => handleCopyEmail(profileData.email)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-semibold rounded transition-colors cursor-pointer"
+                  style={{
+                    backgroundColor: 'var(--accent)',
+                    color: 'var(--bg-main)',
+                  }}
+                  title="Copy email to clipboard"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copied ? 'Copied' : 'Copy Email'}</span>
+                </button>
+
+                <a
+                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(profileData.email)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded border transition-colors hover:opacity-80"
+                  style={{
+                    backgroundColor: 'var(--bg-secondary)',
+                    borderColor: 'var(--border-subtle)',
+                    color: 'var(--text-primary)',
+                  }}
+                  title="Open directly in Gmail Web"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Gmail Web</span>
+                </a>
+
+                <a
+                  href={`mailto:${profileData.email}`}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded border transition-colors hover:opacity-80"
+                  style={{
+                    backgroundColor: 'var(--bg-secondary)',
+                    borderColor: 'var(--border-subtle)',
+                    color: 'var(--text-primary)',
+                  }}
+                  title="Open default email client"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>Mail Client</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Verified Networks */}
+            <div 
+              className="p-6 rounded-lg border space-y-3"
+              style={{
+                backgroundColor: 'var(--bg-secondary)',
+                borderColor: 'var(--border-subtle)',
+              }}
+            >
+              <span className="text-xs font-mono uppercase tracking-wider block mb-2 font-semibold" style={{ color: 'var(--text-muted)' }}>
+                Professional Networks & Code Repositories
+              </span>
+
+              {[
+                { label: 'LinkedIn', handle: 'in/amit-kumar21', url: profileData.linkedin, icon: Linkedin },
+                { label: 'GitHub', handle: '@Amit-kumar80844', url: profileData.github, icon: Github },
+                { label: 'LeetCode', handle: '@Amit_maur (1551 Rating)', url: profileData.leetcode, icon: Code2 },
+              ].map(({ label, handle, url, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-between p-3 rounded border transition-all hover:bg-white/[0.02] group text-xs font-mono"
+                  style={{
+                    borderColor: 'var(--border-subtle)',
+                    backgroundColor: 'var(--bg-card)',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Icon className="w-4 h-4" style={{ color: 'var(--accent)' }} />
+                    <span className="font-semibold">{label}</span>
+                    <span style={{ color: 'var(--text-muted)' }}>— {handle}</span>
+                  </div>
+                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" style={{ color: 'var(--text-muted)' }} />
+                </a>
+              ))}
+            </div>
+
+            {/* Location & Status Info */}
+            <div 
+              className="p-5 rounded-lg border text-xs font-mono space-y-2"
+              style={{
+                backgroundColor: 'var(--bg-secondary)',
+                borderColor: 'var(--border-subtle)',
+                color: 'var(--text-secondary)'
+              }}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>Current Physical Base:</span>
+                <span>Kerala / Bihar, India</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>Availability Window:</span>
+                <span style={{ color: 'var(--accent)' }}>Summer / Fall 2026 & 2027</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>Response Latency:</span>
+                <span>&lt; 24 hours</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right Column: Interactive Direct Message Terminal (7 cols) */}
+          <div className="lg:col-span-7">
+            <div 
+              className="p-6 sm:p-8 rounded-lg border transition-all"
+              style={{
+                backgroundColor: 'var(--bg-card)',
+                borderColor: 'var(--border-strong)',
+              }}
+            >
+              <div className="flex items-center justify-between pb-4 mb-6 border-b" style={{ borderColor: 'var(--border-subtle)' }}>
+                <div>
+                  <h3 className="text-base sm:text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
+                    Direct Message Dispatch
+                  </h3>
+                  <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+                    Draft message with automatic routing
+                  </span>
+                </div>
+                <span className="text-xs font-mono font-semibold" style={{ color: 'var(--accent)' }}>
+                  P2P Form
                 </span>
-              </h3>
+              </div>
 
               {!submitted ? (
-                <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label 
                         htmlFor="name" 
-                        className="block text-xs font-mono mb-1.5"
+                        className="block text-xs font-mono mb-2"
                         style={{ color: 'var(--text-secondary)' }}
                       >
-                        Your Name *
+                        Your Full Name *
                       </label>
                       <input
                         id="name"
@@ -298,8 +285,8 @@ export const ContactSection: React.FC = () => {
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="Jane Doe"
-                        className="w-full px-4 py-2.5 rounded-xl border text-sm transition-colors focus:outline-none"
+                        placeholder="e.g. Linus Torvalds"
+                        className="w-full px-4 py-2.5 rounded border text-sm transition-colors focus:outline-none"
                         style={{
                           backgroundColor: 'var(--bg-secondary)',
                           borderColor: 'var(--border-subtle)',
@@ -311,7 +298,7 @@ export const ContactSection: React.FC = () => {
                     <div>
                       <label 
                         htmlFor="email" 
-                        className="block text-xs font-mono mb-1.5"
+                        className="block text-xs font-mono mb-2"
                         style={{ color: 'var(--text-secondary)' }}
                       >
                         Your Email Address *
@@ -322,8 +309,8 @@ export const ContactSection: React.FC = () => {
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="jane@company.com"
-                        className="w-full px-4 py-2.5 rounded-xl border text-sm transition-colors focus:outline-none"
+                        placeholder="e.g. recruiter@company.com"
+                        className="w-full px-4 py-2.5 rounded border text-sm transition-colors focus:outline-none"
                         style={{
                           backgroundColor: 'var(--bg-secondary)',
                           borderColor: 'var(--border-subtle)',
@@ -336,18 +323,18 @@ export const ContactSection: React.FC = () => {
                   <div>
                     <label 
                       htmlFor="subject" 
-                      className="block text-xs font-mono mb-1.5"
+                      className="block text-xs font-mono mb-2"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Subject
+                      Inquiry Subject
                     </label>
                     <input
                       id="subject"
                       type="text"
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      placeholder="Backend Role Inquiry / Distributed Systems Problem"
-                      className="w-full px-4 py-2.5 rounded-xl border text-sm transition-colors focus:outline-none"
+                      placeholder="e.g. Backend Internship Opportunity / Distributed Architecture"
+                      className="w-full px-4 py-2.5 rounded border text-sm transition-colors focus:outline-none"
                       style={{
                         backgroundColor: 'var(--bg-secondary)',
                         borderColor: 'var(--border-subtle)',
@@ -359,10 +346,10 @@ export const ContactSection: React.FC = () => {
                   <div>
                     <label 
                       htmlFor="message" 
-                      className="block text-xs font-mono mb-1.5"
+                      className="block text-xs font-mono mb-2"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Message *
+                      Message Payload *
                     </label>
                     <textarea
                       id="message"
@@ -370,8 +357,8 @@ export const ContactSection: React.FC = () => {
                       rows={5}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Share details about the role, technical problem, or team..."
-                      className="w-full px-4 py-2.5 rounded-xl border text-sm transition-colors focus:outline-none resize-none"
+                      placeholder="Discuss technical requirements, engineering culture, or role specifics..."
+                      className="w-full px-4 py-3 rounded border text-sm transition-colors focus:outline-none resize-none leading-relaxed"
                       style={{
                         backgroundColor: 'var(--bg-secondary)',
                         borderColor: 'var(--border-subtle)',
@@ -382,20 +369,20 @@ export const ContactSection: React.FC = () => {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 px-6 text-sm font-semibold rounded-xl font-mono flex items-center justify-center gap-2 transition-all cursor-pointer hover:opacity-90 shadow-md"
+                    className="w-full py-3.5 px-6 text-xs font-mono font-semibold rounded flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md hover:opacity-90"
                     style={{
                       backgroundColor: 'var(--accent)',
                       color: 'var(--bg-main)',
                     }}
                   >
                     <Send className="w-4 h-4" />
-                    <span>Transmit Message</span>
+                    <span>Dispatch Transmission via Mail Engine</span>
                   </button>
                 </form>
               ) : (
-                <div className="space-y-5 mt-4">
+                <div className="space-y-6">
                   <div 
-                    className="p-5 rounded-xl border space-y-3"
+                    className="p-5 rounded border space-y-2"
                     style={{
                       backgroundColor: 'var(--accent-muted)',
                       borderColor: 'var(--border-strong)',
@@ -404,17 +391,17 @@ export const ContactSection: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-4 h-4" style={{ color: 'var(--accent)' }} />
                       <h4 className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
-                        Message Prepared for Amit Kumar!
+                        Message Staged for Transmission!
                       </h4>
                     </div>
                     <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                      Your message is formatted and ready to be delivered to <strong style={{ color: 'var(--text-primary)' }}>{profileData.email}</strong>. Choose your preferred dispatch channel below:
+                      Your message has been composed for <strong style={{ color: 'var(--text-primary)' }}>{profileData.email}</strong>. Select an immediate transmission method:
                     </p>
                   </div>
 
-                  {/* Summary Details */}
+                  {/* Summary preview */}
                   <div 
-                    className="p-4 rounded-xl border text-xs font-mono space-y-2"
+                    className="p-4 rounded border text-xs font-mono space-y-2"
                     style={{
                       backgroundColor: 'var(--bg-secondary)',
                       borderColor: 'var(--border-subtle)',
@@ -424,27 +411,27 @@ export const ContactSection: React.FC = () => {
                     <div><strong style={{ color: 'var(--text-primary)' }}>Sender:</strong> {formData.name} ({formData.email})</div>
                     <div><strong style={{ color: 'var(--text-primary)' }}>Subject:</strong> {formData.subject || 'Engineering Inquiry'}</div>
                     <div className="pt-2 border-t" style={{ borderColor: 'var(--border-subtle)' }}>
-                      <strong style={{ color: 'var(--text-primary)' }}>Content Preview:</strong>
-                      <div className="mt-1 p-2 rounded bg-black/10 dark:bg-black/30 text-[11px] whitespace-pre-wrap max-h-32 overflow-y-auto">
+                      <strong style={{ color: 'var(--text-primary)' }}>Payload:</strong>
+                      <div className="mt-1 p-2 rounded bg-black/20 text-[11px] whitespace-pre-wrap max-h-28 overflow-y-auto">
                         {formData.message}
                       </div>
                     </div>
                   </div>
 
                   {/* Dispatch Action Options */}
-                  <div className="space-y-2 pt-2">
+                  <div className="space-y-2.5">
                     <a
                       href={constructGmailWebUrl()}
                       target="_blank"
                       rel="noreferrer"
-                      className="w-full py-3 px-4 rounded-xl text-xs font-mono font-semibold flex items-center justify-center gap-2 transition-all hover:opacity-90 shadow cursor-pointer"
+                      className="w-full py-3 px-4 rounded text-xs font-mono font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer hover:opacity-90"
                       style={{
                         backgroundColor: 'var(--accent)',
                         color: 'var(--bg-main)',
                       }}
                     >
                       <ExternalLink className="w-4 h-4" />
-                      <span>Send Instantly via Gmail Web (Recommended)</span>
+                      <span>Send via Gmail Web Interface (Recommended)</span>
                     </a>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -452,7 +439,7 @@ export const ContactSection: React.FC = () => {
                         href={constructMailtoUrl()}
                         target="_blank"
                         rel="noreferrer"
-                        className="py-2.5 px-3 rounded-xl text-xs font-mono font-medium flex items-center justify-center gap-1.5 border transition-all text-center"
+                        className="py-2.5 px-3 rounded text-xs font-mono font-medium flex items-center justify-center gap-1.5 border transition-all text-center"
                         style={{
                           backgroundColor: 'var(--bg-secondary)',
                           borderColor: 'var(--border-subtle)',
@@ -465,26 +452,27 @@ export const ContactSection: React.FC = () => {
 
                       <button
                         onClick={handleCopyFullMessage}
-                        className="py-2.5 px-3 rounded-xl text-xs font-mono font-medium flex items-center justify-center gap-1.5 border transition-all text-center cursor-pointer"
+                        className="py-2.5 px-3 rounded text-xs font-mono font-medium flex items-center justify-center gap-1.5 border transition-all text-center cursor-pointer"
                         style={{
                           backgroundColor: 'var(--bg-secondary)',
                           borderColor: 'var(--border-subtle)',
                           color: 'var(--text-primary)',
                         }}
                       >
-                        {copiedMessage ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span>{copiedMessage ? 'Message Copied!' : 'Copy Full Text'}</span>
+                        {copiedMessage ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
+                        <span>{copiedMessage ? 'Copied to Clipboard' : 'Copy Full Draft'}</span>
                       </button>
                     </div>
 
                     <button
                       onClick={() => setSubmitted(false)}
-                      className="w-full text-center text-xs font-mono mt-3 hover:underline cursor-pointer"
+                      className="w-full text-center text-xs font-mono pt-2 cursor-pointer hover:underline"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      ← Edit Message Details
+                      ← Re-edit message parameters
                     </button>
                   </div>
+
                 </div>
               )}
 

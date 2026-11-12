@@ -4,7 +4,11 @@ import {
   GitMerge, 
   ExternalLink, 
   Github, 
-  Trophy 
+  Trophy,
+  Award,
+  CheckCircle2,
+  Code2,
+  ArrowUpRight
 } from 'lucide-react';
 import { openSourceData, achievementsData } from '../content/extraData';
 import { profileData } from '../content/profile';
@@ -13,340 +17,232 @@ export const CredentialsSection: React.FC = () => {
   return (
     <section 
       id="credentials" 
-      className="py-20 border-b transition-colors"
+      className="py-24 border-b transition-colors"
       style={{ borderColor: 'var(--border-subtle)' }}
     >
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Section Header */}
-        <div className="mb-12">
-          <span 
-            className="text-xs font-mono tracking-wider uppercase font-semibold block mb-2"
-            style={{ color: 'var(--accent)' }}
-          >
-            06. Proof & Credentials
-          </span>
-          <h2 
-            className="text-3xl sm:text-4xl font-bold tracking-tight"
-            style={{ color: 'var(--text-primary)' }}
-          >
-            Open Source & Algorithmic Milestones
-          </h2>
-          <p 
-            className="text-xs font-mono mt-2 max-w-xl"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            Verifiable public repositories, competitive programming metrics, and open-source contributions.
-          </p>
+        <div className="mb-16">
+          <div className="flex items-center gap-2 mb-3">
+            <span 
+              className="text-xs font-mono tracking-widest uppercase font-semibold"
+              style={{ color: 'var(--accent)' }}
+            >
+              06 — Verified Proof & Credentials
+            </span>
+            <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>/ Algorithmic Rigor & Open Source</span>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+            <h2 
+              className="text-4xl sm:text-5xl font-bold tracking-tight"
+              style={{ color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+            >
+              Milestones & Open Source.
+            </h2>
+            <p 
+              className="text-sm max-w-sm leading-relaxed"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              Verified competitive programming standing, merged open-source codebases, and national algorithmic fellowships.
+            </p>
+          </div>
         </div>
 
-        {/* Natural-flow layout: each track owns a full row so uneven content never leaves a hole */}
-        <div className="space-y-14">
-          
-          {/* Open Source */}
-          <div className="flex flex-col gap-6">
-            <div className="flex items-center justify-between">
-              <h3 
-                className="text-lg font-bold flex items-center gap-2"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                <GitPullRequest className="w-4 h-4" style={{ color: 'var(--accent)' }} />
-                <span>Open-Source Track Record</span>
-              </h3>
-              <a
-                href={profileData.github}
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs font-mono hover:underline flex items-center gap-1 font-semibold"
-                style={{ color: 'var(--accent)' }}
-              >
-                <span>GitHub Profile</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {openSourceData.map((item) => (
-                <div 
-                  key={item.id}
-                  className="p-6 rounded-2xl border transition-all flex flex-col justify-between"
-                  style={{
-                    backgroundColor: 'var(--bg-card)',
-                    borderColor: 'var(--border-strong)',
-                  }}
-                >
-                  <div>
-                    <div 
-                      className="flex items-center justify-between text-xs font-mono mb-2"
-                      style={{ color: 'var(--text-secondary)' }}
-                    >
-                      <div className="flex items-center gap-1.5 font-semibold" style={{ color: 'var(--accent)' }}>
-                        <GitMerge className="w-3.5 h-3.5" />
-                        <span>{item.project}</span>
-                      </div>
-                      <span 
-                        className="px-2 py-0.5 rounded border text-[11px] font-semibold"
-                        style={{
-                          backgroundColor: 'var(--accent-muted)',
-                          borderColor: 'var(--border-subtle)',
-                          color: 'var(--accent)',
-                        }}
-                      >
-                        {item.status}
-                      </span>
-                    </div>
-
-                    <h4 
-                      className="text-sm font-semibold mb-2"
-                      style={{ color: 'var(--text-primary)' }}
-                    >
-                      {item.title}
-                    </h4>
-
-                    <p 
-                      className="text-xs leading-relaxed mb-4"
-                      style={{ color: 'var(--text-secondary)' }}
-                    >
-                      {item.description}
-                    </p>
-                  </div>
-
-                  <div 
-                    className="pt-3 border-t flex items-center justify-between"
-                    style={{ borderColor: 'var(--border-subtle)' }}
-                  >
-                    <div className="flex flex-wrap gap-1">
-                      {item.technologies.map((t, idx) => (
-                        <span 
-                          key={idx} 
-                          className="text-[10px] font-mono px-2 py-0.5 rounded border"
-                          style={{
-                            backgroundColor: 'var(--bg-secondary)',
-                            borderColor: 'var(--border-subtle)',
-                            color: 'var(--text-secondary)',
-                          }}
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      {item.prUrl && (
-                        <a
-                          href={item.prUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-xs font-mono hover:underline flex items-center gap-1 font-semibold"
-                          style={{ color: 'var(--accent)' }}
-                        >
-                          <span>{item.id === 'algo-university-dp' ? 'View Certificate' : (item.prNumber || 'Pull Request')}</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
-                      {item.repoUrl && item.repoUrl !== item.prUrl && (
-                        <a
-                          href={item.repoUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-xs font-mono hover:underline flex items-center gap-1"
-                          style={{ color: 'var(--text-secondary)' }}
-                        >
-                          <span>Repository</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-
-                </div>
-              ))}
-            </div>
-
-            {/* Static GitHub Profile Card */}
+        {/* 1. Large Metric-Forward Achievement Board */}
+        <div 
+          className="grid grid-cols-2 lg:grid-cols-4 gap-0 border-t border-l mb-20"
+          style={{ borderColor: 'var(--border-subtle)' }}
+        >
+          {achievementsData.slice(0, 4).map((item) => (
             <div 
-              className="p-6 rounded-2xl border flex items-center justify-between"
-              style={{
-                backgroundColor: 'var(--bg-secondary)',
-                borderColor: 'var(--border-subtle)',
-              }}
+              key={item.id}
+              className="p-6 sm:p-8 border-r border-b flex flex-col justify-between transition-colors hover:bg-white/[0.01]"
+              style={{ borderColor: 'var(--border-subtle)' }}
             >
-              <div className="flex items-center gap-3">
-                <Github className="w-8 h-8" style={{ color: 'var(--text-primary)' }} />
-                <div>
-                  <h4 className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>@Amit-kumar80844</h4>
-                  <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>
-                    Public Repositories · Backend Systems & Android Code
-                  </span>
+              <div>
+                <span 
+                  className="text-[10px] font-mono uppercase tracking-widest block mb-2 font-semibold"
+                  style={{ color: 'var(--accent)' }}
+                >
+                  {item.category}
+                </span>
+                <div 
+                  className="text-3xl sm:text-4xl font-bold font-mono tracking-tight mb-3"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  {item.metric}
                 </div>
+                <h4 
+                  className="text-sm font-semibold mb-2"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  {item.title}
+                </h4>
+                <p 
+                  className="text-xs leading-relaxed"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {item.description}
+                </p>
               </div>
 
-              <a
-                href={profileData.github}
-                target="_blank"
-                rel="noreferrer"
-                className="px-3.5 py-1.5 text-xs font-mono rounded-lg font-medium transition-colors"
-                style={{
-                  backgroundColor: 'var(--accent)',
-                  color: 'var(--bg-main)',
-                }}
-              >
-                Visit GitHub
-              </a>
+              {item.verificationUrl && (
+                <div className="mt-6 pt-3 border-t" style={{ borderColor: 'var(--border-subtle)' }}>
+                  <a
+                    href={item.verificationUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono font-medium transition-colors hover:underline"
+                    style={{ color: 'var(--accent)' }}
+                  >
+                    <span>Verify Record</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </a>
+                </div>
+              )}
             </div>
+          ))}
+        </div>
 
+        {/* 2. Open Source Merged Contributions */}
+        <div className="mb-20">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-2">
+              <GitPullRequest className="w-4 h-4" style={{ color: 'var(--accent)' }} />
+              <h3 className="text-lg font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
+                Open-Source Contributions
+              </h3>
+            </div>
+            <a
+              href={profileData.github}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs font-mono font-semibold flex items-center gap-1 transition-opacity hover:opacity-80"
+              style={{ color: 'var(--accent)' }}
+            >
+              <span>Explore GitHub</span>
+              <ArrowUpRight className="w-3 h-3" />
+            </a>
           </div>
 
-          {/* Competitive Programming & Milestones */}
-          <div className="flex flex-col gap-6">
-            <h3 
-              className="text-lg font-bold flex items-center gap-2"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              <Trophy className="w-4 h-4" style={{ color: 'var(--accent)' }} />
-              <span>Algorithmic & Academic Milestones</span>
-            </h3>
+          <div className="border-t" style={{ borderColor: 'var(--border-subtle)' }}>
+            {openSourceData.map((item) => (
+              <div 
+                key={item.id}
+                className="grid grid-cols-1 md:grid-cols-12 gap-6 py-6 border-b items-start transition-colors"
+                style={{ borderColor: 'var(--border-subtle)' }}
+              >
+                {/* Project Tag */}
+                <div className="md:col-span-3 space-y-1">
+                  <div className="flex items-center gap-2 text-xs font-mono font-semibold" style={{ color: 'var(--accent)' }}>
+                    <GitMerge className="w-3.5 h-3.5" />
+                    <span>{item.project}</span>
+                  </div>
+                  <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+                    Status: <strong style={{ color: 'var(--text-primary)' }}>{item.status}</strong> · {item.date}
+                  </div>
+                </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-              {achievementsData.map((item) => (
-                <div 
-                  key={item.id}
-                  className="p-5 rounded-2xl border flex flex-col justify-between"
-                  style={{
-                    backgroundColor: 'var(--bg-card)',
-                    borderColor: 'var(--border-strong)',
-                  }}
-                >
-                  <div>
-                    <span 
-                      className="text-[11px] font-mono uppercase block mb-1 font-semibold"
+                {/* Contribution details */}
+                <div className="md:col-span-7 space-y-2">
+                  <h4 className="text-sm sm:text-base font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {item.title}
+                  </h4>
+                  <p className="text-xs sm:text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    {item.description}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {item.technologies.map((t, idx) => (
+                      <span 
+                        key={idx}
+                        className="text-[10px] font-mono px-2 py-0.5 rounded border"
+                        style={{ 
+                          backgroundColor: 'var(--bg-secondary)', 
+                          borderColor: 'var(--border-subtle)',
+                          color: 'var(--text-muted)' 
+                        }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* External links */}
+                <div className="md:col-span-2 flex items-center justify-end gap-3 pt-1">
+                  {item.prUrl && (
+                    <a
+                      href={item.prUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs font-mono font-semibold flex items-center gap-1 transition-colors hover:underline"
                       style={{ color: 'var(--accent)' }}
                     >
-                      {item.category}
-                    </span>
-                    <div 
-                      className="text-2xl font-bold font-mono tracking-tight mb-2"
-                      style={{ color: 'var(--text-primary)' }}
-                    >
-                      {item.metric}
-                    </div>
-                    <h4 
-                      className="text-xs font-semibold mb-2"
-                      style={{ color: 'var(--text-primary)' }}
-                    >
-                      {item.title}
-                    </h4>
-                    <p 
-                      className="text-xs leading-relaxed"
-                      style={{ color: 'var(--text-secondary)' }}
-                    >
-                      {item.description}
-                    </p>
-                  </div>
-
-                  {item.verificationUrl && (
-                    <div 
-                      className="mt-4 pt-3 border-t"
-                      style={{ borderColor: 'var(--border-subtle)' }}
-                    >
-                      <a
-                        href={item.verificationUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs font-mono hover:underline flex items-center gap-1 font-semibold"
-                        style={{ color: 'var(--accent)' }}
-                      >
-                        <span>Verify Profile</span>
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    </div>
+                      <span>{item.id === 'algo-university-dp' ? 'Certificate' : item.prNumber || 'Pull Request'}</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </a>
                   )}
                 </div>
-              ))}
-            </div>
 
-            {/* Coding Profiles Bar */}
-            <div 
-              className="p-5 rounded-2xl border"
-              style={{
-                backgroundColor: 'var(--bg-card)',
-                borderColor: 'var(--border-strong)',
-              }}
-            >
-              <span className="text-[11px] font-mono uppercase block mb-3 font-semibold" style={{ color: 'var(--accent)' }}>
-                Verified Competitive Programming Profiles
-              </span>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                <a
-                  href={profileData.leetcode}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-xl border flex flex-col items-center justify-center text-center transition-all hover:scale-[1.02]"
-                  style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border-subtle)',
-                  }}
-                >
-                  <span className="text-xs font-bold" style={{ color: 'var(--text-primary)' }}>LeetCode</span>
-                  <span className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--accent)' }}>@Amit_maur</span>
-                </a>
-                <a
-                  href={profileData.codeforces}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-xl border flex flex-col items-center justify-center text-center transition-all hover:scale-[1.02]"
-                  style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border-subtle)',
-                  }}
-                >
-                  <span className="text-xs font-bold" style={{ color: 'var(--text-primary)' }}>Codeforces</span>
-                  <span className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--accent)' }}>@amitsingh80020</span>
-                </a>
-                <a
-                  href={profileData.geeksforgeeks}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-xl border flex flex-col items-center justify-center text-center transition-all hover:scale-[1.02]"
-                  style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border-subtle)',
-                  }}
-                >
-                  <span className="text-xs font-bold" style={{ color: 'var(--text-primary)' }}>GeeksforGeeks</span>
-                  <span className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--accent)' }}>@amitkumar2023</span>
-                </a>
-                <a
-                  href={profileData.codolio}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-xl border flex flex-col items-center justify-center text-center transition-all hover:scale-[1.02]"
-                  style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border-subtle)',
-                  }}
-                >
-                  <span className="text-xs font-bold" style={{ color: 'var(--text-primary)' }}>Codolio</span>
-                  <span className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--accent)' }}>@amitkumar21</span>
-                </a>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
 
-            {/* Verification Notice */}
-            <div 
-              className="p-5 rounded-2xl border text-xs leading-relaxed"
-              style={{
-                backgroundColor: 'var(--bg-secondary)',
-                borderColor: 'var(--border-subtle)',
-                color: 'var(--text-secondary)',
-              }}
-            >
-              <span className="font-semibold block mb-1 font-mono" style={{ color: 'var(--text-primary)' }}>
-                Verification & Data Integrity
+        {/* 3. Verified Coding Profiles Bar */}
+        <div 
+          className="p-8 rounded-lg border transition-all"
+          style={{ 
+            backgroundColor: 'var(--bg-card)', 
+            borderColor: 'var(--border-strong)' 
+          }}
+        >
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
+            <div>
+              <span className="text-xs font-mono uppercase tracking-widest font-semibold block mb-1" style={{ color: 'var(--accent)' }}>
+                Verified Algorithmic Profiles
               </span>
-              All figures reflect verified milestones on public platforms (LeetCode, IIIT Kottayam academic grade registers, and GitHub commit histories).
+              <h4 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
+                Competitive Programming & Problem Solving Standing
+              </h4>
             </div>
+            <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+              750+ Solved · 1551 LeetCode Peak · C++ & Java
+            </div>
+          </div>
 
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { platform: 'LeetCode', handle: '@Amit_maur', url: profileData.leetcode, stat: '1551 Rating' },
+              { platform: 'Codeforces', handle: '@amitsingh80020', url: profileData.codeforces || '#', stat: 'Contestant' },
+              { platform: 'GeeksforGeeks', handle: '@amitkumar2023', url: profileData.geeksforgeeks || '#', stat: 'DSA Track' },
+              { platform: 'Codolio', handle: '@amitkumar21', url: profileData.codolio || '#', stat: 'Portfolio' },
+            ].map(({ platform, handle, url, stat }) => (
+              <a
+                key={platform}
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="p-4 rounded border transition-all hover:scale-[1.02] flex flex-col justify-between group"
+                style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  borderColor: 'var(--border-subtle)',
+                }}
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>{platform}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: 'var(--accent)' }} />
+                  </div>
+                  <span className="text-xs font-mono block mt-1" style={{ color: 'var(--text-muted)' }}>{handle}</span>
+                </div>
+                <div className="text-[11px] font-mono mt-3 font-semibold" style={{ color: 'var(--accent)' }}>
+                  {stat}
+                </div>
+              </a>
+            ))}
           </div>
 
         </div>

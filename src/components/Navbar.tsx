@@ -1,18 +1,7 @@
-import React, { useState } from 'react';
-import { 
-  FileText, 
-  Menu, 
-  X, 
-  ArrowUpRight, 
-  Code2, 
-  Cpu, 
-  Layers, 
-  FolderGit2, 
-  Award, 
-  Send 
-} from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { FileText, Menu, Moon, Sun, X } from 'lucide-react';
 import { profileData } from '../content/profile';
-import { ThemeSelector } from './ThemeSelector';
+import { useTheme } from '../context/ThemeProvider';
 
 interface NavbarProps {
   activeSection: string;
@@ -20,19 +9,24 @@ interface NavbarProps {
   onOpenResumeModal: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ 
-  activeSection, 
-  onNavigate, 
-  onOpenResumeModal 
-}) => {
+export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate, onOpenResumeModal }) => {
+  const { currentTheme, setTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const isDark = currentTheme === 'editorial-dark';
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
     { label: 'About', id: 'about' },
-    { label: 'Projects', id: 'projects' },
+    { label: 'Work', id: 'projects' },
     { label: 'Experience', id: 'experience' },
     { label: 'Skills', id: 'skills' },
-    { label: 'Engineering', id: 'engineering' },
+    { label: 'Writing', id: 'engineering' },
     { label: 'Credentials', id: 'credentials' },
     { label: 'Contact', id: 'contact' },
   ];
@@ -43,49 +37,52 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header 
-      className="sticky top-0 z-50 w-full backdrop-blur-md border-b transition-colors"
+    <header
+      className="sticky top-0 z-50 w-full transition-all duration-300"
       style={{
-        backgroundColor: 'var(--bg-main)',
-        borderColor: 'var(--border-subtle)',
+        backgroundColor: scrolled ? 'var(--bg-main)' : 'transparent',
+        borderBottom: scrolled ? '1px solid var(--border-subtle)' : '1px solid transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-8">
-        
-        {/* Zone 1: Single text element wordmark */}
+      <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between gap-8">
+        {/* Wordmark */}
         <button
           onClick={() => handleNavClick('hero')}
-          className="text-left group flex items-center gap-2 cursor-pointer focus-visible:outline-none"
+          className="text-left cursor-pointer focus-visible:outline-none group"
+          aria-label="Go to top"
         >
-          <span 
-            className="font-heading font-bold text-lg tracking-tight transition-colors whitespace-nowrap shrink-0"
+          <span
+            className="font-heading font-bold text-base tracking-tight transition-colors"
             style={{ color: 'var(--text-primary)' }}
           >
-            {profileData.name}
-          </span>
-          <span className="text-xs font-mono hidden sm:inline whitespace-nowrap shrink-0" style={{ color: 'var(--text-muted)' }}>
-            / IIIT Kottayam '27
+            {profileData.name.split(' ')[0]}
+            <span className="font-light" style={{ color: 'var(--text-secondary)' }}>
+              {' '}{profileData.name.split(' ')[1]}
+            </span>
           </span>
         </button>
 
-        {/* Zone 2: Clean single-line text navigation links */}
-        <nav className="hidden lg:flex items-center gap-7 text-sm font-medium">
+        {/* Desktop nav */}
+        <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
             return (
               <button
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
-                className="transition-colors whitespace-nowrap shrink-0 relative py-1 hover:opacity-100"
+                className="relative px-3 py-1.5 text-sm transition-colors cursor-pointer focus-visible:outline-none rounded-md"
                 style={{
-                  color: isActive ? 'var(--accent)' : 'var(--text-secondary)',
-                  fontWeight: isActive ? 600 : 500,
+                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  fontWeight: isActive ? 600 : 400,
+                  backgroundColor: isActive ? 'var(--accent-muted)' : 'transparent',
                 }}
               >
                 {link.label}
                 {isActive && (
-                  <span 
-                    className="absolute bottom-0 left-0 right-0 h-[2px] rounded-full" 
+                  <span
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
                     style={{ backgroundColor: 'var(--accent)' }}
                   />
                 )}
@@ -94,59 +91,87 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
 
-        {/* Zone 3: 1 primary action + Dynamic Theme Selector */}
-        <div className="flex items-center gap-3 shrink-0">
-          <ThemeSelector />
+        {/* Right actions */}
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            onClick={() => setTheme(isDark ? 'swiss-minimal' : 'editorial-dark')}
+            className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors cursor-pointer"
+            style={{
+              backgroundColor: 'var(--bg-secondary)',
+              borderColor: 'var(--border-subtle)',
+              color: 'var(--text-secondary)',
+            }}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
 
           <button
             onClick={onOpenResumeModal}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono font-medium rounded-lg active:scale-95 transition-all whitespace-nowrap shrink-0 cursor-pointer"
+            className="hidden sm:flex items-center gap-1.5 px-4 py-1.5 text-xs font-mono font-semibold rounded-md transition-all cursor-pointer whitespace-nowrap"
             style={{
               backgroundColor: 'var(--accent)',
               color: 'var(--bg-main)',
             }}
+            aria-label="View resume"
           >
             <FileText className="w-3.5 h-3.5" />
-            <span>Resume</span>
+            Resume
           </button>
 
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-[#9A9F99] hover:text-[#F3F4EF] focus:outline-none"
+            className="lg:hidden p-1.5 rounded-md transition-colors cursor-pointer"
+            style={{ color: 'var(--text-secondary)' }}
             aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#101310] border-b border-white/[0.08] px-6 py-4 flex flex-col gap-3">
-          {navLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => handleNavClick(link.id)}
-              className={`text-left text-sm py-2 px-3 rounded-lg transition-colors ${
-                activeSection === link.id
-                  ? 'bg-white/5 text-[#b7f36b] font-semibold'
-                  : 'text-[#9A9F99] hover:text-white'
-              }`}
+        <div
+          className="lg:hidden border-t"
+          style={{
+            backgroundColor: 'var(--bg-main)',
+            borderColor: 'var(--border-subtle)',
+          }}
+        >
+          <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-1">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => handleNavClick(link.id)}
+                className="text-left py-2.5 px-3 rounded-md text-sm transition-colors cursor-pointer"
+                style={{
+                  color: activeSection === link.id ? 'var(--accent)' : 'var(--text-secondary)',
+                  fontWeight: activeSection === link.id ? 600 : 400,
+                  backgroundColor: activeSection === link.id ? 'var(--accent-muted)' : 'transparent',
+                }}
+              >
+                {link.label}
+              </button>
+            ))}
+            <div
+              className="mt-2 pt-3 border-t flex items-center justify-between"
+              style={{ borderColor: 'var(--border-subtle)' }}
             >
-              {link.label}
-            </button>
-          ))}
-          <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between">
-            <span className="text-xs text-[#9A9F99] font-mono">amitsingh80020@gmail.com</span>
-            <a
-              href="https://github.com/Amit-kumar80844"
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs font-mono text-[#b7f36b] flex items-center gap-1"
-            >
-              GitHub <ArrowUpRight className="w-3 h-3" />
-            </a>
+              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+                {profileData.email}
+              </span>
+              <button
+                onClick={onOpenResumeModal}
+                className="text-xs font-mono font-semibold px-3 py-1.5 rounded-md cursor-pointer"
+                style={{ backgroundColor: 'var(--accent)', color: 'var(--bg-main)' }}
+              >
+                Resume
+              </button>
+            </div>
           </div>
         </div>
       )}

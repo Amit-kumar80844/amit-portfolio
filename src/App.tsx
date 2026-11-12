@@ -59,6 +59,13 @@ function PortfolioContent() {
         fontFamily: 'var(--font-body)',
       }}
     >
+      {/* Scroll progress indicator */}
+      <div
+        className="scroll-progress"
+        style={{ width: 'var(--scroll-progress, 0%)' }}
+        aria-hidden="true"
+      />
+
       {/* Top Navigation */}
       <Navbar
         activeSection={activeSection}

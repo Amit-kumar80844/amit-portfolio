@@ -20,6 +20,7 @@ export interface ThemeConfig {
   accentMuted: string;
   borderSubtle: string;
   borderStrong: string;
+  fontFamilyDisplay: string;
   fontFamilyHeading: string;
   fontFamilyBody: string;
   fontFamilyMono: string;
@@ -30,7 +31,7 @@ export const themes: Record<DesignTheme, ThemeConfig> = {
     id: 'swiss-minimal',
     name: 'Swiss Pure / Light',
     category: 'Architectural / Minimal',
-    description: 'Stark white & warm off-white canvas, stark black grotesque type, cobalt blue accent.',
+    description: 'Clean architectural canvas — stark white & warm off-white, grotesque type, cobalt blue precision accent.',
     bgMain: '#FBFBFB',
     bgSecondary: '#F3F4F6',
     bgCard: '#FFFFFF',
@@ -42,9 +43,10 @@ export const themes: Record<DesignTheme, ThemeConfig> = {
     accentMuted: 'rgba(2, 132, 199, 0.08)',
     borderSubtle: 'rgba(15, 23, 42, 0.08)',
     borderStrong: 'rgba(15, 23, 42, 0.16)',
-    fontFamilyHeading: "'Outfit', sans-serif",
-    fontFamilyBody: "'Plus Jakarta Sans', sans-serif",
-    fontFamilyMono: "'JetBrains Mono', monospace",
+    fontFamilyDisplay: "'DM Sans', -apple-system, sans-serif",
+    fontFamilyHeading: "'DM Sans', -apple-system, sans-serif",
+    fontFamilyBody: "'DM Sans', sans-serif",
+    fontFamilyMono: "'IBM Plex Mono', monospace",
   },
   'editorial-dark': {
     id: 'editorial-dark',
@@ -62,7 +64,8 @@ export const themes: Record<DesignTheme, ThemeConfig> = {
     accentMuted: 'rgba(183, 243, 107, 0.12)',
     borderSubtle: 'rgba(255, 255, 255, 0.08)',
     borderStrong: 'rgba(255, 255, 255, 0.16)',
-    fontFamilyHeading: "'Outfit', sans-serif",
+    fontFamilyDisplay: "'Inter', -apple-system, sans-serif",
+    fontFamilyHeading: "'Inter', -apple-system, sans-serif",
     fontFamilyBody: "'Plus Jakarta Sans', sans-serif",
     fontFamilyMono: "'JetBrains Mono', monospace",
   },
@@ -82,6 +85,7 @@ export const themes: Record<DesignTheme, ThemeConfig> = {
     accentMuted: 'rgba(16, 185, 129, 0.12)',
     borderSubtle: 'rgba(16, 185, 129, 0.15)',
     borderStrong: 'rgba(16, 185, 129, 0.3)',
+    fontFamilyDisplay: "'JetBrains Mono', monospace",
     fontFamilyHeading: "'JetBrains Mono', monospace",
     fontFamilyBody: "'JetBrains Mono', monospace",
     fontFamilyMono: "'JetBrains Mono', monospace",
@@ -102,7 +106,8 @@ export const themes: Record<DesignTheme, ThemeConfig> = {
     accentMuted: 'rgba(56, 189, 248, 0.12)',
     borderSubtle: 'rgba(255, 255, 255, 0.08)',
     borderStrong: 'rgba(56, 189, 248, 0.25)',
-    fontFamilyHeading: "'Outfit', sans-serif",
+    fontFamilyDisplay: "'Inter', -apple-system, sans-serif",
+    fontFamilyHeading: "'Inter', -apple-system, sans-serif",
     fontFamilyBody: "'Plus Jakarta Sans', sans-serif",
     fontFamilyMono: "'JetBrains Mono', monospace",
   }

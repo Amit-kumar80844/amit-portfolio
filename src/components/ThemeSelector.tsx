@@ -95,7 +95,7 @@ export const ThemeSelector: React.FC = () => {
             </div>
 
             <div className="px-2 pt-2 pb-1 border-t mt-2 text-[10px] font-mono text-center" style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}>
-              Built with UI/UX Pro Max architecture
+              Click outside to close · 4 distinct aesthetics
             </div>
           </div>
         </>

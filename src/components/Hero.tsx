@@ -1,18 +1,20 @@
 import React from 'react';
 import { 
-  ArrowUpRight, 
-  FileText, 
+  ArrowRight, 
+  Download, 
   Github, 
   Linkedin, 
   Mail, 
-  MapPin, 
-  Terminal, 
-  Cpu, 
-  Smartphone, 
+  Code2, 
+  Terminal,
+  Cpu,
   Database,
-  Download,
-  Code2
+  Smartphone,
+  Layers,
+  MapPin,
+  ExternalLink
 } from 'lucide-react';
+import { motion } from 'motion/react';
 import { profileData } from '../content/profile';
 
 interface HeroProps {
@@ -20,261 +22,315 @@ interface HeroProps {
   onOpenResumeModal: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ 
-  onNavigateToProjects, 
-  onOpenResumeModal 
-}) => {
+export const Hero: React.FC<HeroProps> = ({ onNavigateToProjects, onOpenResumeModal }) => {
   return (
-    <section 
-      id="hero" 
-      className="relative pt-12 pb-20 border-b overflow-hidden transition-colors"
-      style={{
-        borderColor: 'var(--border-subtle)',
-      }}
+    <section
+      id="hero"
+      className="relative min-h-[90vh] flex items-center pt-12 pb-20 overflow-hidden border-b transition-colors"
+      style={{ borderColor: 'var(--border-subtle)' }}
     >
-      {/* Subtle blueprint grid overlay & soft radial ambient glow */}
+      {/* Background blueprint grid subtle overlay */}
       <div 
-        className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" 
-        aria-hidden="true" 
-      />
-      <div 
-        className="absolute top-[-10%] right-[10%] w-[550px] h-[550px] rounded-full blur-[120px] pointer-events-none transition-all duration-500" 
-        style={{
-          background: 'radial-gradient(circle, var(--accent-muted) 0%, transparent 70%)',
-          opacity: 0.65,
-        }}
+        className="absolute inset-0 bg-dot-pattern opacity-30 pointer-events-none" 
         aria-hidden="true" 
       />
 
-      <div className="relative max-w-7xl mx-auto px-6">
-        
-        {/* Availability bar - Clean unboxed text with typographic separators */}
-        <div 
-          className="flex items-center gap-2 text-xs font-mono mb-8"
-          style={{ color: 'var(--text-secondary)' }}
+      <div className="relative max-w-7xl mx-auto px-6 w-full">
+
+        {/* Telemetry Status Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="flex flex-wrap items-center gap-3 text-xs font-mono mb-8"
+          style={{ color: 'var(--text-muted)' }}
         >
-          <span className="font-semibold" style={{ color: 'var(--accent)' }}>Available</span>
-          <span aria-hidden="true">·</span>
-          <span>{profileData.availabilityNotice}</span>
-          <span aria-hidden="true" className="hidden sm:inline">·</span>
-          <span className="hidden sm:inline">Graduation 2027</span>
-        </div>
+          <div className="flex items-center gap-2">
+            <span 
+              className="w-2 h-2 rounded-full inline-block"
+              style={{ backgroundColor: 'var(--accent)' }}
+            />
+            <span className="font-semibold uppercase tracking-wider" style={{ color: 'var(--accent)' }}>
+              AVAILABLE
+            </span>
+          </div>
+          <span aria-hidden="true">/</span>
+          <span style={{ color: 'var(--text-secondary)' }}>
+            {profileData.availabilityNotice}
+          </span>
+          <span aria-hidden="true" className="hidden sm:inline">/</span>
+          <span className="hidden sm:inline">
+            IIIT Kottayam · B.Tech CSE '27
+          </span>
+        </motion.div>
 
-        {/* Asymmetric 2-Column Split Hero */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          {/* Left Column (7 cols): Typography, Identity & Actions */}
+        {/* Asymmetric 12-Column Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+
+          {/* Left Column (7 cols): Identity, Thesis & Ingress */}
           <div className="lg:col-span-7 flex flex-col justify-center">
-            
-            <div className="flex items-center gap-3 mb-4">
+
+            {/* Eyebrow Name & Specialization */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="flex items-center gap-3 mb-4"
+            >
               <span 
-                className="text-sm font-mono tracking-wider uppercase font-semibold"
-                style={{ color: 'var(--accent)' }}
+                className="text-xs font-mono uppercase tracking-widest font-semibold px-2 py-0.5 rounded border"
+                style={{ 
+                  color: 'var(--accent)',
+                  borderColor: 'var(--border-strong)',
+                  backgroundColor: 'var(--bg-secondary)'
+                }}
               >
+                {profileData.name}
+              </span>
+              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
                 {profileData.tagline}
               </span>
-            </div>
+            </motion.div>
 
-            <h1 
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.08] mb-6" 
-              style={{ textWrap: 'balance', color: 'var(--text-primary)' }}
+            {/* Main Architectural Thesis Display H1 */}
+            <motion.h1
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.06] mb-6"
+              style={{ 
+                color: 'var(--text-primary)', 
+                fontFamily: 'var(--font-heading)',
+                letterSpacing: '-0.035em',
+                textWrap: 'balance'
+              }}
             >
               Building software that works <span style={{ color: 'var(--accent)' }}>beyond the happy path.</span>
-            </h1>
+            </motion.h1>
 
-            <p 
-              className="text-base sm:text-lg max-w-2xl leading-relaxed mb-8"
+            {/* Precise Supporting Statement */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.25 }}
+              className="text-base sm:text-lg leading-relaxed mb-8 max-w-2xl"
               style={{ color: 'var(--text-secondary)' }}
             >
               {profileData.supportingText}
-            </p>
+            </motion.p>
 
-            {/* CTAs & Social Links */}
-            <div className="flex flex-wrap items-center gap-4 mb-10">
+            {/* Tactical Actions & Social Ingress */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.35 }}
+              className="flex flex-wrap items-center gap-3 mb-10"
+            >
               <button
                 onClick={onNavigateToProjects}
-                className="px-6 py-3 text-sm font-semibold rounded-xl active:scale-95 transition-all shadow-lg cursor-pointer"
-                style={{
-                  backgroundColor: 'var(--accent)',
-                  color: 'var(--bg-main)',
+                className="group flex items-center gap-2 px-5 py-2.5 text-xs font-mono font-semibold rounded transition-all cursor-pointer shadow-sm hover:opacity-90"
+                style={{ 
+                  backgroundColor: 'var(--accent)', 
+                  color: 'var(--bg-main)' 
                 }}
               >
-                Explore Selected Projects
+                <span>Explore Architecture</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </button>
 
               <a
                 href="/Amit_Kumar_Resume.pdf"
                 download="Amit_Kumar_Resume.pdf"
-                className="flex items-center gap-2 px-5 py-3 text-sm font-semibold rounded-xl border transition-all cursor-pointer shadow-sm hover:opacity-95"
+                className="flex items-center gap-2 px-4 py-2.5 text-xs font-mono font-medium rounded border transition-all cursor-pointer hover:bg-white/[0.03]"
                 style={{
-                  backgroundColor: 'var(--bg-card)',
                   borderColor: 'var(--border-strong)',
                   color: 'var(--text-primary)',
+                  backgroundColor: 'var(--bg-secondary)',
                 }}
               >
-                <Download className="w-4 h-4" style={{ color: 'var(--accent)' }} />
-                <span>Download Resume</span>
+                <Download className="w-3.5 h-3.5" style={{ color: 'var(--accent)' }} />
+                <span>Download CV</span>
               </a>
 
               <button
                 onClick={onOpenResumeModal}
-                className="flex items-center gap-1.5 px-4 py-3 text-xs font-mono font-medium rounded-xl border transition-all cursor-pointer"
+                className="px-3.5 py-2.5 text-xs font-mono font-medium rounded border transition-all cursor-pointer hover:bg-white/[0.03]"
                 style={{
-                  backgroundColor: 'var(--bg-secondary)',
                   borderColor: 'var(--border-subtle)',
                   color: 'var(--text-secondary)',
+                  backgroundColor: 'transparent',
                 }}
-                title="Open interactive CV viewer and print mode"
+                title="Open interactive resume viewer & printable sheet"
               >
-                <FileText className="w-3.5 h-3.5" />
-                <span>View / Print CV</span>
+                <span>Interactive CV</span>
               </button>
 
-              <div className="flex items-center gap-1 pl-2 border-l" style={{ borderColor: 'var(--border-subtle)' }}>
-                <a
-                  href={profileData.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-lg transition-colors hover:scale-105"
-                  style={{ color: 'var(--text-secondary)' }}
-                  aria-label="GitHub Profile"
-                  title="GitHub Profile"
-                >
-                  <Github className="w-5 h-5" />
-                </a>
-                <a
-                  href={profileData.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-lg transition-colors hover:scale-105"
-                  style={{ color: 'var(--text-secondary)' }}
-                  aria-label="LinkedIn Profile"
-                  title="LinkedIn Profile"
-                >
-                  <Linkedin className="w-5 h-5" />
-                </a>
-                <a
-                  href={profileData.leetcode}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-lg transition-colors hover:scale-105"
-                  style={{ color: 'var(--text-secondary)' }}
-                  aria-label="LeetCode Profile"
-                  title="LeetCode Profile"
-                >
-                  <Code2 className="w-5 h-5" />
-                </a>
-                <a
-                  href={`mailto:${profileData.email}`}
-                  className="p-2.5 rounded-lg transition-colors hover:scale-105"
-                  style={{ color: 'var(--text-secondary)' }}
-                  aria-label="Send Email"
-                  title="Send Email"
-                >
-                  <Mail className="w-5 h-5" />
-                </a>
+              {/* Direct Code & Profile Ingress */}
+              <div 
+                className="flex items-center gap-1.5 pl-0 sm:pl-3 border-l-0 sm:border-l w-full sm:w-auto pt-2 sm:pt-0"
+                style={{ borderColor: 'var(--border-subtle)' }}
+              >
+                {[
+                  { href: profileData.github, icon: Github, label: 'GitHub (@Amit-kumar80844)' },
+                  { href: profileData.linkedin, icon: Linkedin, label: 'LinkedIn (in/amit-kumar21)' },
+                  { href: profileData.leetcode, icon: Code2, label: 'LeetCode (@Amit_maur)' },
+                  { href: `mailto:${profileData.email}`, icon: Mail, label: 'Email' },
+                ].map(({ href, icon: Icon, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={href.startsWith('mailto') ? undefined : '_blank'}
+                    rel={href.startsWith('mailto') ? undefined : 'noreferrer'}
+                    className="p-2 rounded border transition-all hover:scale-105 focus-visible:outline-none"
+                    style={{ 
+                      borderColor: 'var(--border-subtle)',
+                      backgroundColor: 'var(--bg-card)',
+                      color: 'var(--text-secondary)' 
+                    }}
+                    aria-label={label}
+                    title={label}
+                  >
+                    <Icon className="w-4 h-4" />
+                  </a>
+                ))}
               </div>
-            </div>
+            </motion.div>
 
-            {/* Core Domain Badges */}
-            <div 
+            {/* Core Domain Telemetry Badges */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.45 }}
               className="pt-6 border-t grid grid-cols-2 sm:grid-cols-4 gap-4"
               style={{ borderColor: 'var(--border-subtle)' }}
             >
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1.5 text-xs font-mono mb-1 font-semibold" style={{ color: 'var(--accent)' }}>
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-mono font-semibold mb-0.5" style={{ color: 'var(--accent)' }}>
                   <Cpu className="w-3.5 h-3.5" />
                   <span>Backend</span>
                 </div>
-                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Spring Boot & Redis</span>
+                <span className="text-[11px] block" style={{ color: 'var(--text-muted)' }}>
+                  Spring Boot & Redis
+                </span>
               </div>
 
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1.5 text-xs font-mono mb-1 font-semibold" style={{ color: 'var(--accent)' }}>
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-mono font-semibold mb-0.5" style={{ color: 'var(--accent)' }}>
                   <Database className="w-3.5 h-3.5" />
                   <span>Distributed</span>
                 </div>
-                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Caching & Tokens</span>
+                <span className="text-[11px] block" style={{ color: 'var(--text-muted)' }}>
+                  Lua Tokens & Caching
+                </span>
               </div>
 
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1.5 text-xs font-mono mb-1 font-semibold" style={{ color: 'var(--accent)' }}>
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-mono font-semibold mb-0.5" style={{ color: 'var(--accent)' }}>
                   <Smartphone className="w-3.5 h-3.5" />
                   <span>Android</span>
                 </div>
-                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Compose & Jetpack</span>
+                <span className="text-[11px] block" style={{ color: 'var(--text-muted)' }}>
+                  Compose & Jetpack
+                </span>
               </div>
 
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1.5 text-xs font-mono mb-1 font-semibold" style={{ color: 'var(--accent)' }}>
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-mono font-semibold mb-0.5" style={{ color: 'var(--accent)' }}>
                   <Terminal className="w-3.5 h-3.5" />
-                  <span>Systems</span>
+                  <span>Algorithms</span>
                 </div>
-                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>POSIX & Storage</span>
+                <span className="text-[11px] block" style={{ color: 'var(--text-muted)' }}>
+                  750+ DSA · 1551 Peak
+                </span>
               </div>
-            </div>
+            </motion.div>
 
           </div>
 
-          {/* Right Column (5 cols): Editorial Visual Frame */}
-          <div className="lg:col-span-5 flex flex-col items-center justify-center">
-            <div 
-              className="relative w-full max-w-sm rounded-2xl overflow-hidden border shadow-2xl group transition-all"
+          {/* Right Column (5 cols): Studio Portrait & Technical Registry Frame */}
+          <motion.div
+            initial={{ opacity: 0, x: 16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="lg:col-span-5 flex flex-col gap-4"
+          >
+            {/* Museum Photographic Frame */}
+            <div
+              className="hero-portrait border rounded-lg overflow-hidden transition-all group"
               style={{
                 backgroundColor: 'var(--bg-card)',
                 borderColor: 'var(--border-strong)',
               }}
             >
-              {/* Studio Portrait Asset */}
-              <div className="aspect-square w-full overflow-hidden relative" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+              <div 
+                className="aspect-[4/5] w-full overflow-hidden relative"
+                style={{ backgroundColor: 'var(--bg-secondary)' }}
+              >
                 <img
                   src={profileData.avatarUrl}
-                  alt="Amit Kumar portrait in studio lighting"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
+                  alt={`${profileData.name} portrait`}
+                  className="w-full h-full object-cover object-[center_18%] transition-transform duration-700 group-hover:scale-[1.02]"
                   loading="eager"
-                />
-                <div 
-                  className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70" 
+                  referrerPolicy="no-referrer"
                 />
               </div>
 
-              {/* Identity Snapshot Card Footer */}
+              {/* Minimalist Photographic Metadata Plate */}
               <div 
-                className="p-5 border-t"
-                style={{
-                  backgroundColor: 'var(--bg-card)',
-                  borderColor: 'var(--border-subtle)',
+                className="p-4 border-t flex flex-col gap-2"
+                style={{ 
+                  backgroundColor: 'var(--bg-secondary)', 
+                  borderColor: 'var(--border-subtle)' 
                 }}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-heading font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>
-                    {profileData.name}
-                  </span>
-                  <div className="flex items-center gap-1 text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>
-                    <MapPin className="w-3 h-3" style={{ color: 'var(--accent)' }} />
-                    <span>India</span>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-sm font-bold block" style={{ color: 'var(--text-primary)' }}>
+                      {profileData.name}
+                    </span>
+                    <span className="text-xs font-mono" style={{ color: 'var(--accent)' }}>
+                      {profileData.role}
+                    </span>
+                  </div>
+                  <div className="text-right text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+                    <span>CGPA </span>
+                    <strong style={{ color: 'var(--text-primary)' }}>{profileData.cgpa}</strong>
                   </div>
                 </div>
 
-                <div className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  B.Tech CSE @ IIIT Kottayam · Class of 2027
-                </div>
-
                 <div 
-                  className="mt-3 pt-3 border-t flex items-center justify-between text-[11px] font-mono"
-                  style={{
-                    borderColor: 'var(--border-subtle)',
-                    color: 'var(--text-muted)',
-                  }}
+                  className="pt-2 border-t flex items-center justify-between text-[11px] font-mono"
+                  style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
                 >
-                  <span>Role: <strong style={{ color: 'var(--accent)', fontWeight: 600 }}>Backend Engineer</strong></span>
-                  <span>CGPA: <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{profileData.cgpa}</strong></span>
+                  <div className="flex items-center gap-1">
+                    <MapPin className="w-3 h-3" style={{ color: 'var(--accent)' }} />
+                    <span>IIIT Kottayam & Patna, India</span>
+                  </div>
+                  <span>Class of 2027</span>
                 </div>
               </div>
-
             </div>
-          </div>
+
+            {/* Quick Specialization Summary Strip */}
+            <div 
+              className="p-3.5 rounded border text-xs font-mono space-y-1.5"
+              style={{
+                backgroundColor: 'var(--bg-secondary)',
+                borderColor: 'var(--border-subtle)',
+                color: 'var(--text-secondary)'
+              }}
+            >
+              <div className="flex items-center justify-between">
+                <span style={{ color: 'var(--text-muted)' }}>Undergrad:</span>
+                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>B.Tech Computer Science</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span style={{ color: 'var(--text-muted)' }}>Focus Areas:</span>
+                <span style={{ color: 'var(--accent)' }}>Distributed Caching & Systems</span>
+              </div>
+            </div>
+
+          </motion.div>
 
         </div>
 
